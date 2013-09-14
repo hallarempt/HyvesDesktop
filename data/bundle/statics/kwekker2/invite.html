@@ -1,0 +1,61 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<script type="text/javascript" src="http://localhost/statics/kwekker2/log4javascript.js"></script>
+	<script type="text/javascript">
+		var _layout = new log4javascript.PatternLayout("%d{HH:mm:ss} %c:%p:%m%n");
+		var _consoleAppender = new log4javascript.BrowserConsoleAppender(_layout);
+		_consoleAppender.setThreshold(log4javascript.Level.ALL);
+		function _addAppenders(logger) {
+			logger.addAppender(_consoleAppender);
+		}
+	</script>
+	<script type="text/javascript" src="http://localhost/statics/logging.js"></script>
+	<script type="text/javascript" src="http://localhost/statics/dateformat.js"></script>
+	<script type="text/javascript" src="http://localhost/statics/browserdetection.js"></script>
+	<script type="text/javascript" src="http://localhost/statics/prototype.js"></script>
+	<script type="text/javascript" src="http://localhost/statics/json.js"></script>
+	<script type="text/javascript" src="http://localhost/statics/hyvesdesktop/translator.js"></script>
+	<script type="text/javascript" src="http://localhost/statics/mediaLocator.js"></script>
+	<script type="text/javascript" src="http://localhost/statics/template.js"></script>
+	<script type="text/javascript" src="http://localhost/statics/template_wrapper.js"></script>
+	<script type="text/javascript" src="http://localhost/statics/header.js"></script>
+	<script type="text/javascript" src="http://localhost/precompiled/fancy_layout.js"></script>
+	<script type="text/javascript" src="http://localhost/statics/kwekker2/roster.js"></script>
+	<script type="text/javascript" src="http://localhost/statics/kwekker2/shared.js"></script>
+	<script type="text/javascript" src="http://localhost/statics/kwekker2/invite.js"></script>
+	<script type="text/javascript">
+		window.kwekker = true;
+		
+		window.mediaLocator = new MediaLocator();
+	</script>
+	
+	<link rel="stylesheet" href="http://localhost/statics/prototip/css/prototip.css" type="text/css"></link>
+	<link rel="stylesheet" href="http://localhost/statics/kwekker2/client.css" type="text/css"></link>
+	<link rel="stylesheet" href="http://localhost/statics/style20.css" type="text/css"></link>
+	<link rel="stylesheet" href="http://localhost/statics/layout_820.css" type="text/css"></link>
+	<style type="text/css">
+		html,body { height: 100%; }
+		
+		#inviteWindowBody { margin: 0px; overflow: hidden; }
+		 
+		#inviteWindowHeader { padding: 8px; font-weight: bold; }
+		
+		#contactsContainer { overflow: auto; }
+	</style>
+</head>
+<body id="inviteWindowBody" onload="initInvitationManager()">
+	<div id="inviteWindowHeader" class="header">Invite Contacts to Conversation</div>
+	<div id="menu" class="menu-bg">
+		<input id="searchInput" type="search" placeholder="Search for friends" />
+	</div>
+	<div id="contactsContainer">
+		<div>
+			<div id="uiRosterListOnline"></div>
+		</div>
+		<div>
+			<div id="uiRosterListOffline"></div>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,25 @@
+Index: src/tools/linux/symupload/sym_upload.cc
+===================================================================
+--- src/tools/linux/symupload/sym_upload.cc	(revision 2679)
++++ src/tools/linux/symupload/sym_upload.cc	(working copy)
+@@ -41,6 +41,7 @@
+ 
+ #include <unistd.h>
+ 
++#include <stdlib.h>
+ #include <cstdio>
+ #include <cassert>
+ #include <functional>
+Index: src/tools/linux/symupload/minidump_upload.cc
+===================================================================
+--- src/tools/linux/symupload/minidump_upload.cc	(revision 2679)
++++ src/tools/linux/symupload/minidump_upload.cc	(working copy)
+@@ -34,7 +34,7 @@
+ //  symbol_file: the breakpad format symbol file
+ 
+ #include <unistd.h>
+-
++#include <stdlib.h>
+ #include <string>
+ 
+ #include "common/linux/http_upload.h"

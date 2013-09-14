@@ -1,0 +1,8 @@
+templates.addTranslation('GENERAL_NORTON_WARNING', 'This feature is blocked by Norton Internet Security');
+templates.addTranslation('ERROR_REACTION_NOCONTENT', 'A little shy? You can\'t comment without text.');
+templates.addTranslation('ERROR_REACTION_TOOLONG', 'reaction too long');
+
+templates.addFromString('general.tmplError', '	<table border=\"0\" class=\"ProfileHomeBox\" style=\"margin: 4px;width: 372px;\">\n\n	<tr>\n	<td width=\"32\">\n		<img src=\"http://${hyves_cache_url}/images/icons32/important.png\" width=\"32\" height=\"32\" class=\"transparentpng\">\n	<\/td>\n	\n	<td valign=\"middle\" align=\"left\" width=\"95%\">\n	<b><span class=\"error\">Uh oh...<\/span><\/b>\n	<\/td>\n	<\/tr>\n	<tr>\n	<td colspan=\"2\">\n		<li>${msg}<\/li>\n	<\/td>	\n	<\/tr>\n	<\/table>\n');
+templates.addFromString('general.tmplSuccess', '<span id=\"success_feedback\" style=\"display: block;\">\n<table class=\"ProfileHomeBox\" style=\"margin: 4px 4px 0px 4px; width: 372px;\">\n	<tr>\n		<td valign=\"top\" width=\"48\">\n			<img src=\"http://${hyves_cache_url}/images/icons32/button_ok.png\" width=\"32\" height=\"32\" class=\"transparentpng\">\n		<\/td>\n		<td style=\"padding-left: 10px;\">\n			<b>\n			${msg}\n			<\/b>\n		<\/td>\n		<td valign=\"top\" align=\"right\">\n			<img class=\"fakelink transparentpng\" src=\"http://${hyves_cache_url}/images/icons/${personalisedItemsSubdir}/icons16/delete.png\" width=\"16\" height=\"16\" border=\"0\" align=\"absbottom\" onclick=\"Effect.Shrink(\'success_feedback\')\">\n		<\/td>	\n	<\/tr>\n	\n	{if extra}\n    <tr>\n        <td colspan=\"3\">\n            ${extra}\n        <\/td>\n    <\/tr>\n    {/if}\n	\n	<\/table>\n	<\/span>\n');
+
+if(window.jsloaded) {jsloaded('/general/error_successTemplate.tpl')}

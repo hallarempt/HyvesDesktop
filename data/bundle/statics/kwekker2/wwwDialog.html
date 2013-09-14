@@ -1,0 +1,115 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<script type="text/javascript" src="http://localhost/statics/kwekker2/log4javascript.js"></script>
+	<script type="text/javascript">
+		var _layout = new log4javascript.PatternLayout("%d{HH:mm:ss} %c:%p:%m%n");
+		var _consoleAppender = new log4javascript.BrowserConsoleAppender(_layout);
+		_consoleAppender.setThreshold(log4javascript.Level.ALL);
+		function _addAppenders(logger) {
+			logger.addAppender(_consoleAppender);
+		}
+	</script>
+	<script type="text/javascript" src="http://localhost/statics/logging.js"></script>
+	<script type="text/javascript" src="http://localhost/statics/fastinit.js"></script>
+	<script type="text/javascript" src="http://localhost/statics/browserdetection.js"></script>
+	<script type="text/javascript" src="http://localhost/statics/dateformat.js"></script>
+	<script type="text/javascript" src="http://localhost/statics/simpledateformat.js"></script>
+	<script type="text/javascript" src="http://localhost/statics/prototype.js"></script>
+	<script type="text/javascript" src="http://localhost/statics/scriptaculous/builder.js"></script>
+	<script type="text/javascript" src="http://localhost/statics/scriptaculous/effects.js"></script>
+	<script type="text/javascript" src="http://localhost/statics/scriptaculous_core_extensions.js"></script>
+	<script type="text/javascript" src="http://localhost/statics/json.js"></script>
+	<script type="text/javascript" src="http://localhost/statics/EventHandler.js"></script>
+	<script type="text/javascript" src="http://localhost/statics/template.js"></script>
+	<script type="text/javascript" src="http://localhost/statics/template_wrapper.js"></script>
+	<script type="text/javascript" src="http://localhost/statics/header.js"></script>
+	<script type="text/javascript" src="http://localhost/precompiled/headerTemplates_locale.js"></script>
+	<script type="text/javascript" src="http://localhost/precompiled/chatTemplates_locale.js"></script>
+	<script type="text/javascript" src="http://localhost/precompiled/fancy_layout.js"></script>
+	<script type="text/javascript" src="http://localhost/statics/hyvesdesktop/translator.js"></script>
+	<script type="text/javascript" src="http://localhost/statics/kwekker2/shared.js"></script>
+	<script type="text/javascript" src="http://localhost/statics/kwekker2/wwwDialog.js"></script>
+	<script type="text/javascript" src="http://localhost/statics/number-functions.js"></script>
+	<script type="text/javascript" src="http://localhost/statics/mediaLocator.js"></script>
+	<script type="text/javascript" src="http://localhost/statics/LocationHistoryUtil.js"></script>
+	<script type="text/javascript">
+		suppressSiteErrors = false; // do not suppress default handler
+		var mode = 4;
+		window.kwekker = true;
+	</script>
+
+	<link rel="stylesheet" href="http://localhost/statics/prototip/css/prototip.css" type="text/css"></link>
+	<link rel="stylesheet" href="http://localhost/statics/kwekker2/client.css" type="text/css"></link>
+	<link rel="stylesheet" href="http://localhost/statics/style20.css" type="text/css"></link>
+	<link rel="stylesheet" href="http://localhost/statics/layout_820.css" type="text/css"></link>
+	<style type="text/css">
+		html,body { height: 100%; }
+		
+		textarea { resize: none; }
+		
+		.rte_content { width: 371px; }
+		.rte_text_options ul { clear: none; }
+		
+		.wwwHeader { font-size: 15px; margin: 12px; }
+		.wwwHeader .avatar { float: left; margin: 0px; }
+		.wwwHeader span { display: block; margin: 12px; padding: 12px 12px 12px 46px; white-space: nowrap; }
+		
+		.wwwHeader+div { margin-top: 40px }
+		 
+		.ChatBody>div { margin: 5px 12px 2px 70px; clear: both; }
+		
+		#location_history_map { float: right; }
+		 
+		#locationhistory_addToHub_span { float: right; }
+	</style>
+</head>
+<body class="ChatBody" style="margin: 0px; overflow: hidden">
+	<h1 class="wwwHeader">
+		<div class="avatar small">
+			<a id="avatarLink" href="#">
+				<img id="avatarImage" src="http://localhost/images/nixel.gif" alt="" class="square-img">
+			</a>
+		</div>
+		<span id="currentWwwHeader"></span>
+	</h1>
+	<div>
+		<span id="wwwDialogHeader">Laat je vrienden zien waar je bent en wat je doet!</span>
+	</div>
+	<div>
+		<div id="location_history_map"></div>
+		<div id="rteContainer"></div>
+	</div>
+	<div>
+		@ 
+		<input id="www_box" type="text" class="www-where" style="width: 251px" autocomplete="off" />
+		<input id="www_favoritelocation" type="hidden" />
+		<span id="submitButton" class="button" style="margin-left: 13px"><span><input style="width: 60px" type="submit" value="Verstuur"/></span></span>
+		<span id="locationhistory_addToHub_span">
+			<label for="locationhistory_addToHub_checkbox"><input type="checkbox" id="locationhistory_addToHub" value="1" checked="checked"> Toevoegen aan spot</label>
+		</span>
+	</div>
+	<div>
+		<span id="visibilityLabel">Wie mag het zien:</span>
+		<select id="visibilityInput" onchange="window.wwwDialog.onVisibilityChanged()">
+			<option id="visibilityFriendsOnly" value="2" label="Alleen vrienden" selected="selected" />
+			<option id="visibilityFriendsOfFriends" value="7" label="Vrienden van vrienden" />
+			<option id="visibilityHyvers" value="4" label="Hyvers" />
+			<option id="visibilityEverybody" value="5" label="Iedereen" />
+		</select>
+		<input type="hidden" id="friendGroup" value="0" />
+	</div>
+	<script type="text/javascript">
+		if (window.Hyves && window.FastInit) {
+			FastInit.addOnLoad(function() {
+				Hyves.fireOnDomReady();
+				try {
+					wwwDialogOnload();
+				} catch(e) {
+					logging.error('wwwDialog.html: ' + e, e);
+				}
+			});
+		}
+	</script>
+</body>
+</html>

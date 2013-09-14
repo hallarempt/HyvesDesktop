@@ -1,0 +1,26 @@
+templates.addTranslation('CHAT_ERROR_INVALID_LOGIN', 'Ongeldige gebruikersnaam of wachtwoord');
+templates.addTranslation('CHAT_ERROR_SERVER_UNREACHABLE', 'Door een storing werkt de chat momenteel helaas niet, we werken er hard aan dit probleem op te lossen! ');
+templates.addTranslation('CHAT_ERROR_SERVER_UNREACHABLE_MAINTENANCE', 'Sorry! Onze chat servers zijn niet beschikbaar wegens onderhoud.');
+templates.addTranslation('CHAT_ERROR_SERVER_UNREACHABLE_FIREWALL', 'Hyves Desktop wordt mogelijk geblokkeerd door een Firewall. Configureer je Firewall om poort 5222 toe te staan voor de Hyves Desktop, of neem contact op met je systeembeheerder.');
+templates.addTranslation('CHAT_ERROR_GENERAL', 'Er is een fout opgetreden, code: ${code}');
+templates.addTranslation('CHAT_ERROR_DISCONNECT', 'De verbinding met de chat server werd verbroken...');
+templates.addTranslation('CHAT_ERROR_CONFLICT', 'Je bent ingelogd op een andere locatie');
+templates.addTranslation('GENERAL_ERROR_UNEXPECTED', 'Er is iets misgegaan');
+templates.addTranslation('CHAT_AUTORECONNECT_SECONDS', 'Je wordt automatisch opnieuw verbonden in ${secondsRemaining} seconden...');
+templates.addTranslation('CHAT_NEW_DOWNLOAD_AVAILABLE', 'Een nieuwe versie van Hyves Desktop is beschikbaar! Wil je de nieuwe versie downloaden en installeren?');
+templates.addTranslation('CHAT_NO_NEW_DOWNLOAD_AVAILABLE', 'Er is geen nieuwe versie van Hyves Desktop beschikbaar. Toch updaten?');
+templates.addTranslation('DETECT_FLASHVERSION_WARNING', 'Hmm...je hebt flash versie ${yourVersion}, en je hebt minimaal ${minimumVersion} nodig...klik <a href=\"http://www.adobe.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwaveFlash&Lang=Dutch\">hier<\/a> om het gratis te downloaden!');
+templates.addTranslation('CHAT_BUZZ_MESSAGE', 'Buzzzzzzzzzzzzzz!');
+templates.addTranslation('CHAT_BUZZ_BUTTON', 'Buzzer');
+templates.addTranslation('GENERAL_SEND', 'Verstuur'); 
+templates.addTranslation('DOCK_ROSTER_SEARCH_FRIENDS', 'Zoek naar vrienden...');
+templates.addTranslation('GENERAL_CHAT', 'Chat');
+templates.addTranslation('GENERAL_SCRAP', 'Krabbel');
+templates.addTranslation('GENERAL_LABEL_EMAIL', 'Email');
+templates.addTranslation('GENERAL_MESSAGE_PRIVATE', 'Priv&eacute;-bericht');
+templates.addTranslation('SMS_SUBJECT', 'SMS');
+templates.addTranslation('UT_FB_HM_SUBJECT', 'Onderwerp:');
+
+templates.addFromString('chat.tmplErrorMsg', '<div id=\"error_feedback_${msgId}\" style=\"display: block;\">\n	<table width=\"100%\" class=\"ProfileHomeBox\" style=\"margin: 0px\">\n		<tr>\n			<td style=\"width: 48px\">\n				<img src=\"http://localhost/images/icons32/important.png\" width=\"32\" height=\"32\">\n			<\/td>\n			<td style=\"padding-left: 10px;\">\n				<span id=\"error_text\" class=\"success Block\" style=\"font-weight: bold\">${msg|fancyLayout:\"body\"}<\/span>\n			<\/td>\n			<td style=\"text-align: right; vertical-align: top\">\n				<img src=\"http://localhost/images/icons/default/icons16/delete.png\" alt=\"\" class=\"fakelink\" style=\"width: 16px; height: 16px; border: 0px\" onclick=\"Effect.Shrink(\'error_feedback_${msgId}\')\">\n			<\/td>	\n		<\/tr>\n	<\/table>\n<\/div>\n');
+templates.addFromString('chat.tmplReconnect', '	Er is geen verbinding met de chat server\n	<br />\n	Klik hier om opnieuw te verbinden:\n	<br />\n	<br />\n	<span style=\"text-align: center\"><button class="large" onclick="window.location.reload();"><span>Opnieuw verbinden...</span></button></span>\n	{if autoReconnect}\n	<br />\n	<span id=\"autoReconnectSeconds\"><\/span>\n	{/if}\n');
+templates.addFromString('chat.smsInfo', '	${charsLeft} letters over. {if creditsLeft != null && messagesLeft != null}SMS tegoed: &euro; ${creditsLeft.numberFormat(numberFormatMoney)} (${messagesLeft} smsjes) <a href=\"${\'http://www.\' + hyves_base_url + \'/?module=ProfileManage&action=showCommerceAddCredit\'}\">Opwaarderen<\/a>{/if}\n');

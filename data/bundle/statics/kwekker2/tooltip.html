@@ -1,0 +1,120 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<script type="text/javascript" src="http://localhost/statics/simpledateformat.js"></script>
+	<script type="text/javascript" src="http://localhost/statics/dateformat.js"></script>
+	<script type="text/javascript" src="http://localhost/statics/json.js"></script>
+	<script type="text/javascript" src="http://localhost/statics/prototype.js"></script>
+	<script type="text/javascript" src="http://localhost/statics/hyvesdesktop/translator.js"></script>
+	<script type="text/javascript" src="http://localhost/statics/mediaLocator.js"></script>
+	<script type="text/javascript">
+		window.kwekker = true;
+		
+		window.dateFormat = new DateFormat();
+		window.mediaLocator = new MediaLocator();
+	</script>
+	
+	<link rel="stylesheet" href="http://localhost/statics/kwekker2/client.css" type="text/css"></link>
+	<style type="text/css">
+		body { margin: 0px; border: 4px solid #99bae3; width: 362px; min-height: 103px; }
+		
+		.avatar { float: left; margin: 10px; }
+		.onlineStatus { float: right; margin: 10px; color: #999; }
+		.name { margin: 10px 0px; color: #039; font-weight: bold; font-size: 12pt; }
+		.www { margin: 10px; }
+		.wwwTime { color: #999; font-size: 7pt; }
+
+		.buttons { clear: both; margin: 0px 10px 10px; }
+		.buttons button+button { margin-left: 4px; }
+		button.large span { padding: 3px 7px 7px 4px; }
+	</style>
+	<script type="text/javascript">
+		function initToolTip() {
+			
+			var parameters = window.toolTip.parametersJSON().parseJSON();
+			
+			$('profileImageLink').href = 'http://' + parameters.userhome;
+			
+			$('onlineStatus').innerHTML = '<img src="http://localhost/images/hyppo/status_' + parameters.status + '.png">' +
+			                              parameters.statusText;
+			
+			$('nick').innerHTML = '<a href="http://' + parameters.userhome + '">' + parameters.nick + '</a>';
+			
+			if (parameters.wwwHtml) {
+				$('www').innerHTML = '<strong>www: </strong>' + parameters.wwwHtml;
+			}
+			
+			if (parameters.mediaId && parameters.mediaSecret) {
+				window.mediaLocator.setMedia('profileImage', parameters.mediaId, parameters.mediaSecret);
+			}				
+			
+			window.jid = parameters.jid;
+			
+			$('chatButton').firstChild.innerHTML = '<img src="http://localhost/images/hyppo/comments.png" alt=""> ' + tr('Chat');
+			$('scrapButton').firstChild.innerHTML = '<img src="http://localhost/images/hyppo/pencil.png" alt=""> ' + tr('Scrap');
+			$('privateMessageButton').firstChild.innerHTML = '<img src="http://localhost/images/hyppo/email.png" alt=""> ' + tr('Private message');
+			$('smsButton').firstChild.innerHTML = '<img src="http://localhost/images/hyppo/phone.png" alt=""> ' + tr('SMS');
+		}
+		
+		function chatClicked() {
+			
+			window.windowManager.raiseEvent(ObjectToJSONString({
+				name: 'initiateSession',
+				jid: window.jid,
+				messageType: 'chat'
+			}));
+			
+			window.toolTip.close();
+		}
+		
+		function scrapClicked() {
+			
+			window.windowManager.raiseEvent(ObjectToJSONString({
+				name: 'initiateSession',
+				jid: window.jid,
+				messageType: 'scrap'
+			}));
+			
+			window.toolTip.close();
+		}
+		
+		function privateMessageClicked() {
+			
+			window.windowManager.raiseEvent(ObjectToJSONString({
+				name: 'initiateSession',
+				jid: window.jid,
+				messageType: 'privateMessage'
+			}));
+			
+			window.toolTip.close();
+		}
+		
+		function smsClicked() {
+			
+			window.windowManager.raiseEvent(ObjectToJSONString({
+				name: 'initiateSession',
+				jid: window.jid,
+				messageType: 'sms'
+			}));
+			
+			window.toolTip.close();
+		}
+	</script>
+</head>
+<body onload="initToolTip()">
+	<div class="avatar large">
+		<a id="profileImageLink" href="#">
+			<img id="profileImage" src="http://localhost/images/nixel.gif" alt=""/>
+		</a>
+	</div>
+	<div id="onlineStatus" class="onlineStatus"></div>
+	<div id="nick" class="name"></div>
+	<div id="www" class="www"></div>
+	<div class="buttons">
+		<button id="chatButton" class="large" onclick="chatClicked()"><span></span></button>
+		<button id="scrapButton" class="large" onclick="scrapClicked()"><span></span></button>
+		<button id="privateMessageButton" class="large" onclick="privateMessageClicked()"><span></span></button>
+		<button id="smsButton" class="large" onclick="smsClicked()"><span></button>
+	</div>
+</body>
+</html>

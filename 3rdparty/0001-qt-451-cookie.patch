@@ -1,0 +1,32 @@
+diff --git a/src/network/access/qnetworkaccesshttpbackend.cpp b/src/network/access/qnetworkaccesshttpbackend.cpp
+index 9664f53..cb60b63 100644
+--- a/src/network/access/qnetworkaccesshttpbackend.cpp
++++ b/src/network/access/qnetworkaccesshttpbackend.cpp
+@@ -769,12 +769,8 @@ void QNetworkAccessHttpBackend::replyHeaderChanged()
+ 
+     for (; it != end; ++it) {
+         QByteArray value = rawHeader(it->first);
+-        if (!value.isEmpty()) {
+-            if (it->first.toLower() == "set-cookie")
+-                value += "\n";
+-            else
+-                value += ", ";
+-        }
++        if (!value.isEmpty())
++            value += ", ";
+         value += it->second;
+         setRawHeader(it->first, value);
+     }
+diff --git a/src/network/access/qnetworkcookie.cpp b/src/network/access/qnetworkcookie.cpp
+index 79f537c..d9f38be 100644
+--- a/src/network/access/qnetworkcookie.cpp
++++ b/src/network/access/qnetworkcookie.cpp
+@@ -1013,8 +1013,6 @@ QList<QNetworkCookie> QNetworkCookie::parseCookies(const QByteArray &cookieStrin
+                 }
+ 
+                 position = nextNonWhitespace(cookieString, position);
+-                if (position > endOfSetCookie)
+-                    endOfCookie = true;
+             }
+ 
+         if (!cookie.name().isEmpty())

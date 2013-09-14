@@ -1,0 +1,116 @@
+<ui version="4.0" >
+ <class>Form</class>
+ <widget class="QWidget" name="Form" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>382</width>
+    <height>107</height>
+   </rect>
+  </property>
+  <property name="windowTitle" >
+   <string>Form</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout" >
+   <item row="0" column="1" >
+    <widget class="QLabel" name="label_4" >
+     <property name="text" >
+      <string>Popup</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="2" >
+    <widget class="QLabel" name="label_5" >
+     <property name="text" >
+      <string>Sound</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0" >
+    <widget class="QLabel" name="label" >
+     <property name="text" >
+      <string>If a friend comes online</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="2" >
+    <widget class="QCheckBox" name="friendOnlineSoundCheckbox" >
+     <property name="text" >
+      <string/>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0" >
+    <widget class="QLabel" name="label_2" >
+     <property name="text" >
+      <string>If a new conversation is started</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1" >
+    <widget class="QCheckBox" name="newConversationPopupCheckbox" >
+     <property name="text" >
+      <string/>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="2" >
+    <widget class="QCheckBox" name="newConversationSoundCheckbox" >
+     <property name="text" >
+      <string/>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0" >
+    <widget class="QLabel" name="label_3" >
+     <property name="text" >
+      <string>If you receive a notification</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="1" >
+    <widget class="QCheckBox" name="newNotificationPopupCheckbox" >
+     <property name="text" >
+      <string/>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="2" >
+    <widget class="QCheckBox" name="newNotificationSoundCheckbox" >
+     <property name="text" >
+      <string/>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1" >
+    <widget class="QCheckBox" name="friendOnlinePopupCheckbox" >
+     <property name="text" >
+      <string/>
+     </property>
+    </widget>
+   </item>
+  </layout>
+  <zorder>label</zorder>
+  <zorder>label_2</zorder>
+  <zorder>label_3</zorder>
+  <zorder>label_4</zorder>
+  <zorder>label_5</zorder>
+  <zorder>newConversationPopupCheckbox</zorder>
+  <zorder>newNotificationPopupCheckbox</zorder>
+  <zorder>newNotificationSoundCheckbox</zorder>
+  <zorder>newConversationSoundCheckbox</zorder>
+  <zorder>friendOnlineSoundCheckbox</zorder>
+  <zorder>friendOnlinePopupCheckbox</zorder>
+ </widget>
+ <tabstops>
+  <tabstop>friendOnlinePopupCheckbox</tabstop>
+  <tabstop>newNotificationPopupCheckbox</tabstop>
+  <tabstop>newConversationPopupCheckbox</tabstop>
+  <tabstop>newConversationSoundCheckbox</tabstop>
+  <tabstop>friendOnlineSoundCheckbox</tabstop>
+  <tabstop>newNotificationSoundCheckbox</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+</ui>

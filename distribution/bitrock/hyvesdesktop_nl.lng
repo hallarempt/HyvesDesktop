@@ -1,0 +1,5 @@
+install.alreadyExists=Een eerdere beta-versie van Hyves Desktop is gevonden op uw computer. U wordt geadviseerd deze eerst te verwijderen. Wilt u de oude versie nu verwijderen?
+install.finalPage=Wilt u ${product_fullname} nu starten?
+install.vcRuntime=Installing VC++ runtime package
+install.updateDetected=Er is een ${product_fullname}-installatie gevonden in ${installdir}. Er wordt een update uitgevoerd naar versie ${product_version}.
+install.unableToKill=Een oude versie van de Hyves Desktop is momenteel actief.\nSluit Hyves Desktop en start de installatie opnieuw.\n\nKlik hiervoor met de rechtermuisknop op het Hyves-icoon in het systeemvak en kies Afsluiten.

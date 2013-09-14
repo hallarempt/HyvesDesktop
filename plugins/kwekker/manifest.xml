@@ -1,0 +1,17 @@
+<package>
+ <metadata>
+  <name>kwekker</name>
+  <displayname>Chat</displayname>
+  <vendor>Hyves</vendor>
+  <version>0.1.0</version>
+  <autoStart>false</autoStart>
+  <type>application/x-c++-code</type>
+  <entry>bin/Kwekker.library</entry>
+  <registerEntryPoint>true</registerEntryPoint>
+ </metadata>
+ <contents/>
+ <file>
+  <path>bin/Kwekker.library</path>
+  <md5></md5>
+ </file>
+</package>

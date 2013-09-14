@@ -1,0 +1,10 @@
+project(libexif)
+CMAKE_MINIMUM_REQUIRED(VERSION 2.6.0 FATAL_ERROR)
+SET(CMAKE_INCLUDE_DIRECTORIES_PROJECT_BEFORE ON)
+SET(CMAKE_INCLUDE_CURRENT_DIR ON)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config-exif.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-exif.h)
+include_directories(.)
+include_directories(${CMAKE_CURRENT_BINARY_DIR})
+include_directories(./libexif)
+
+add_subdirectory(libexif)

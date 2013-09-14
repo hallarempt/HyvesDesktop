@@ -1,0 +1,56 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+		<title>Hyves Desktop Landing Page</title>
+		<script type="text/javascript" src="http://localhost/statics/hyvesdesktop/translator.js"></script>
+		<script type="text/javascript" src="http://localhost/statics/intro/landingpagecounter.js"></script>
+		<script type="text/javascript">
+			function initLanguage() {
+				document.getElementById('text1').innerHTML = tr("Upload");
+				document.getElementById('text2').innerHTML = tr("Easy and quickly uploading of many photos with the Hyves Photo Uploader");
+				document.getElementById('text3').innerHTML = tr("Pimp:");
+				document.getElementById('text4').innerHTML = tr("Add balloons, borders and objects!");
+				document.getElementById('text5').innerHTML = tr("Titels &amp; tags:");
+				document.getElementById('text6').innerHTML = tr("Add titels &amp; tags to multiple photos at once with a single click.");
+				initShowAgainState();
+			}
+		</script>
+		<style>
+			body { margin: 0px; background-color: #fff; }
+			.text { padding: 75px 3px 0px; vertical-align: top; }
+			.pointer { margin: 2px 2px 19px; font-size: 10pt; font-family: "Arial"; }
+			.button { margin-top: 20px; margin-bottom: 35px; border: 0px; }
+		</style>
+	</head>
+	<body onload="initLanguage();">
+	<table width="800" height="600" border="0" cellpadding="0" cellspacing="0">
+		<tr style="height: 44px">
+			<td colspan="3">
+				<img src="images/welcome_title.png" width="800" height="44" alt="" />
+			</td>
+		</tr>
+		<tr>
+			<td class="text">
+				<p class="pointer"><span id="text1" style="font-weight: bold">Uploaden</span><br/>
+					<span id="text2">Makkelijk, snel en veel foto's uploaden via de Hyves foto uploader</span></p>
+				<a href="intro1.html"><img src="images/back.jpg" class="button" /></a>
+			</td>
+			<td>
+				<img src="images/desktop2_03.jpg" width="573" height="470" alt="" />
+			</td>
+			<td class="text" style="padding-top: 40px">
+				<p class="pointer"><span id="text3" style="font-weight: bold">Pimpen:</span><br />
+					<span id="text4">Voeg ballonnen, lijsten en objecten toe!</span></p>
+				<p class="pointer"><span id="text5" style="font-weight: bold">Titels &amp; tags:</span><br />
+					<span id="text6">Voeg titels &amp; tags aan meerdere foto's tegelijk toe met 1 klik.</span></p>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="3" style="height:50px; vertical-align: text-top">
+				<input id="showAgainCheckbox" type="checkbox" name="showagain" onchange="saveShowAgainState()">
+				<label for="showAgainCheckbox"><span id="showAgainLabel">Deze intro nogmaals tonen</span></label>
+			</td>
+		</tr>
+	</table>
+	</body>
+</html>

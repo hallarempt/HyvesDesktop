@@ -1,0 +1,51 @@
+#include <windows.h>
+
+#define VER_FILEVERSION             @HD_WIN_VERSION@
+#define VER_FILEVERSION_STR         "@HD_WIN_VERSION@\0"
+
+#define VER_PRODUCTVERSION          @HD_WIN_VERSION@
+#define VER_PRODUCTVERSION_STR      "@HD_WIN_VERSION@\0"
+
+#ifndef DEBUG
+#define VER_DEBUG                   0
+#else
+#define VER_DEBUG                   VS_FF_DEBUG
+#endif
+
+VS_VERSION_INFO VERSIONINFO
+FILEVERSION	VER_FILEVERSION
+PRODUCTVERSION	VER_PRODUCTVERSION
+FILEFLAGSMASK    0x3f
+FILEOS          0x4
+FILETYPE        0x2
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "000004b0"
+        BEGIN
+            VALUE "CompanyName",      "Hyves"
+            VALUE "FileDescription",  "Hyves Desktop"
+            VALUE "FileVersion",      VER_FILEVERSION_STR
+	    VALUE "Full Version",     VER_FILEVERSION_STR
+            VALUE "InternalName",     "Kwekker"
+            VALUE "LegalCopyright",   "Copyright 2009 Startphone Limited"
+            VALUE "OriginalFilename", "HyvesDesktop.exe"
+            VALUE "ProductName",      "Hyves Desktop"
+            VALUE "ProductVersion",   VER_PRODUCTVERSION_STR
+        END
+    END
+END
+DI_ICON1               ICON    DISCARDABLE     "data/appicon.ico"
+
+#define IDS_STRING1 100
+STRINGTABLE
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+BEGIN
+	IDS_STRING1	"Import and View Photos"
+END
+
+STRINGTABLE
+LANGUAGE LANG_DUTCH, SUBLANG_NEUTRAL
+BEGIN
+	IDS_STRING1	"Foto's importeren en bekijken"
+END

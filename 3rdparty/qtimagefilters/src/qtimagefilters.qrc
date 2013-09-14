@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/qtimagefilters" >
+	<file alias="ellipse-active.png">../data/hyves-desktop-selection-ellipse-active.png</file>
+	<file alias="ellipse.png">../data/hyves-desktop-selection-ellipse.png</file>
+	<file alias="rectangle-active.png">../data/hyves-desktop-selection-rectangle-active.png</file>
+	<file alias="rectangle.png">../data/hyves-desktop-selection-rectangle.png</file>
+    </qresource>
+</RCC>

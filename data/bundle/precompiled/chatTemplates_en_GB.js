@@ -1,0 +1,26 @@
+templates.addTranslation('CHAT_ERROR_INVALID_LOGIN', 'Invalid username or password');
+templates.addTranslation('CHAT_ERROR_SERVER_UNREACHABLE', 'The server is currently unavailable, we\'re working hard to solve this problem!');
+templates.addTranslation('CHAT_ERROR_SERVER_UNREACHABLE_MAINTENANCE', 'Sorry, our chat servers are down for maintenance.');
+templates.addTranslation('CHAT_ERROR_SERVER_UNREACHABLE_FIREWALL', 'Hyves Desktop is possibly being blocked by a firewall. Configure your firewall to open port 5222 for Hyves Desktop, or contact your system administrator.');
+templates.addTranslation('CHAT_ERROR_GENERAL', 'An error has occured, code: ${code}');
+templates.addTranslation('CHAT_ERROR_DISCONNECT', 'The connection with the chat server was lost...');
+templates.addTranslation('CHAT_ERROR_CONFLICT', 'You signed in on another location');
+templates.addTranslation('GENERAL_ERROR_UNEXPECTED', 'Something went wrong');
+templates.addTranslation('CHAT_AUTORECONNECT_SECONDS', 'You will automatically reconnect in ${secondsRemaining} seconds...');
+templates.addTranslation('CHAT_NEW_DOWNLOAD_AVAILABLE', 'A new version of Hyves Desktop is available! Would you like to download and install it?');
+templates.addTranslation('CHAT_NO_NEW_DOWNLOAD_AVAILABLE', 'There is currently no new version of Hyves Desktop available. Update anyway?');
+templates.addTranslation('DETECT_FLASHVERSION_WARNING', 'Hmmmm, you have flash version ${yourVersion}, and you need at least version ${minimumVersion}. Download it <a href=\"http://www.adobe.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwaveFlash\">here<\/a> for free!');
+templates.addTranslation('CHAT_BUZZ_MESSAGE', 'Buzzzzzzzzzzzzzz!');
+templates.addTranslation('CHAT_BUZZ_BUTTON', 'Buzzer');
+templates.addTranslation('GENERAL_SEND', 'Send'); 
+templates.addTranslation('DOCK_ROSTER_SEARCH_FRIENDS', 'Search for friends...');
+templates.addTranslation('GENERAL_CHAT', 'Chat');
+templates.addTranslation('GENERAL_SCRAP', 'Scrap');
+templates.addTranslation('GENERAL_LABEL_EMAIL', 'Email');
+templates.addTranslation('GENERAL_MESSAGE_PRIVATE', 'Private message');
+templates.addTranslation('SMS_SUBJECT', 'SMS');
+templates.addTranslation('UT_FB_HM_SUBJECT', 'Subject:');
+
+templates.addFromString('chat.tmplErrorMsg', '<div id=\"error_feedback_${msgId}\" style=\"display: block;\">\n	<table width=\"100%\" class=\"ProfileHomeBox\" style=\"margin: 0px\">\n		<tr>\n			<td style=\"width: 48px\">\n				<img src=\"http://localhost/images/icons32/important.png\" width=\"32\" height=\"32\">\n			<\/td>\n			<td style=\"padding-left: 10px;\">\n				<span id=\"error_text\" class=\"success Block\" style=\"font-weight: bold\">${msg|fancyLayout:\"body\"}<\/span>\n			<\/td>\n			<td style=\"text-align: right; vertical-align: top\">\n				<img src=\"http://localhost/images/icons/default/icons16/delete.png\" alt=\"\" class=\"fakelink\" style=\"width: 16px; height: 16px; border: 0px\" onclick=\"Effect.Shrink(\'error_feedback_${msgId}\')\">\n			<\/td>	\n		<\/tr>\n	<\/table>\n<\/div>\n');
+templates.addFromString('chat.tmplReconnect', '	There\'s no connection with the chat server\n	<br />\n	Click here to reconnect:\n	<br />\n	<br />\n	<span style=\"text-align: center\"><button class="large" onclick="window.location.reload();"><span>Reconnect...</span></button></span>\n	{if autoReconnect}\n	<br />\n	<span id=\"autoReconnectSeconds\"><\/span>\n	{/if}\n');
+templates.addFromString('chat.smsInfo', '	${charsLeft} characters left. {if creditsLeft != null && messagesLeft != null}Your credit: &euro; ${creditsLeft.numberFormat(numberFormatMoney)} (${messagesLeft} SMS messages) <a href=\"${\'http://www.\' + hyves_base_url + \'/?module=ProfileManage&action=showCommerceAddCredit\'}\">Buy credits<\/a>{/if}\n');

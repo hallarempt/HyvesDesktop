@@ -1,0 +1,95 @@
+log4javascript change log
+-------------------------
+
+1.2 (21/6/2006)
+- Tested in and added workaround for a bug in Opera 9 Beta 2 and Opera 9.0
+- Tested in Konqueror 3.4 and 3.5 and added workarounds and fixes for browser
+  bugs
+- Added addErrorListener and removeErrorListener methods to log4javascript
+  object to allow custom error handling
+- Added close() method to PopUpAppender and InlineAppender
+- Added test directory with an HTML page containing automated tests
+- Added enable/disable logging checkbox to InlinePopUpAppender and PopUpAppender
+  so that unnecessary messages (for instance, from a timer) can be ignored
+- An invalid value supplied to a configuration option setter now leaves config
+  property unchanged rather than reverting to the default
+- Fixed bug in PopUpAppender in IE on Windows XP Service Pack 2 when accessed
+  via the file system. The browser by default disables JavaScript in the pop-up
+  window until the user opts to enable it, at which point they would previously
+  see an uncaught error in log4javascript. Now, a proper error message is
+  displayed and the appender is disabled.
+- Slight alterations to toolbar in InlinePopUpAppender and PopUpAppender - text
+  capitalization and title attributes added to inputs
+- toString() method added to all appenders
+- correction to errors in XmlLayout's output
+- documentation corrections and additions
+
+1.1.1 (17/5/2006)
+- Fixed a minor bug with scrolling to the latest message and added "scroll to
+  latest" checkbox to console window in InlinePopUpAppender and PopUpAppender
+
+1.1 (16/5/2006)
+- Added configuration option setters on Appenders and refactored to prevent
+  config properties being altered directly. Several configuration options
+  may not be altered after the appender has been initialized
+- Added scrollToLatestMessage constructor parameter, isScrollToLatestMessage
+  and setScrollToLatestMessage methods to InlineAppender and PopUpAppender
+- Added isVisible method to InlineAppender
+- Changed setShowOneError to setAlertAllErrors in logLog, with obvious change
+  in logic
+- Added layout property key configuration options to layout constructors for 
+  JsonLayout and HttpPostDataLayout
+- Changed the default timestamp property name to "timestamp" instead of
+  "timeStamp" in JsonLayout and HttpPostDataLayout
+- Expanded documentation to include a section in the manual about configuring
+  appenders
+- Removed browser sniffing code
+
+1.0.1 (30/4/2006)
+- Option to have new log messages appear at the top added to InlineAppender and
+  PopUpAppender. This option can be specified in the constructor and can also
+  be toggled via a checkbox in the console window
+- PopUpAppender changed to not focus the pop-up console window by default, and
+  the demo page altered to create its own logger with focussing turned on,
+  meaning the behaviour in the demo is essentially unchanged
+
+1.0 (26/4/2006)
+- Tweaks to default values in PopUpAppender and InlineAppender
+- Bugfixes and stylistic tweaks resulting from running JSLint on
+  log4javascript.js
+
+1.0 beta 2
+- Show/hide button removed from InlineAppender, replaced by show() and hide()
+  methods on the InlineAppender object
+- batchSeparator, batchHeader and batchFooter added to Layout and applied to
+  JsonLayout - a batch of JSON log messages is now created as an array literal
+
+1.0 beta
+- TRACE level added, since this was added to log4j in 1.2.12
+- PopUpAppender default settings bugfix
+- getLevel method added to Logger
+- tweak to vertical alignment of checkboxes and padding of buttons in
+  InlineAppender and PopUpAppender
+- fixed getDefaultLogger and getNullLogger to return loggers other than the
+  root logger
+
+0.96
+- moved console.html to inline document.writes in log4javascript.js
+- fixed getDefaultLogger to return the same object on successive calls
+- fixed scrolling issue in Opera InlineAppender and PopUpAppender
+- scrollbars are now automatic on InlineAppender and PopUpAppender, i.e. they
+  only appear when required
+- fixed bug where regex searches were not applied to new log entries in
+  InlineAppender and PopUpAppender
+- changed Safari font size in InlineAppender and PopUpAppender
+
+0.95
+- AjaxAppender enhancements:
+	- waitForResponse added
+	- timer added
+- layout parameter added to all appender constructors
+
+0.94
+- First publicly available version
+- IE 5 support added
+- Full support for wrapping in IE added for InlineAppender and PopUpAppender

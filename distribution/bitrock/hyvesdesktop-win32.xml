@@ -1,0 +1,537 @@
+<project>
+    <shortName>hyvesdesktop</shortName>
+    <fullName>Hyves Desktop</fullName>
+    <version>1.3.1</version>
+    <vendor>Hyves</vendor>
+    <installerFilename>Hyves-Desktop-setup-${product_version}.${platform_exec_suffix}</installerFilename>
+    <licenseFile>../terms_of_use.txt</licenseFile>
+    <singleInstanceCheck>1</singleInstanceCheck>
+    <leftImage>leftsideimage.png</leftImage>
+    <logoImage>logoimage.png</logoImage>
+    <defaultLanguage>nl</defaultLanguage>
+    <allowLanguageSelection>1</allowLanguageSelection>
+    <allowedLanguages>en nl</allowedLanguages>
+    <preInstallationActionList>
+        <setInstallerVariable>
+            <name>vcredistResult</name>
+            <value>0</value>
+        </setInstallerVariable>
+
+        <!-- Begin shut down currently running instance the clean/nice way - this only works for version 1.1.4112 and above -->
+        <registryGet>
+            <key>HKEY_LOCAL_MACHINE\Software\Hyves\Hyves Desktop\</key>
+            <name>Location</name>
+            <variable>location</variable>
+        </registryGet>
+        <runProgram>
+            <abortOnError>0</abortOnError>
+            <program>${location}/bin/HyvesDesktop.exe</program>
+            <programArguments>--kill</programArguments>
+            <ruleEvaluationLogic>or</ruleEvaluationLogic>
+            <ruleList>
+                <processTest logic="is_running" name="HyvesDesktop.exe" />
+                <processTest logic="is_running" name="HYVESD~1.EXE" />
+                <fileTest condition="exists" path="${location}/bin/HyvesDesktop.exe" />
+            </ruleList>
+        </runProgram>
+        <wait>
+            <ms>3000</ms>
+            <ruleEvaluationLogic>or</ruleEvaluationLogic>
+            <ruleList>
+                <processTest logic="is_running" name="HyvesDesktop.exe" />
+                <processTest logic="is_running" name="HYVESD~1.EXE" />
+                <fileTest condition="exists" path="${location}/bin/HyvesDesktop.exe" />
+            </ruleList>
+        </wait>
+        <!-- End shut down currently running instance the clean/nice way -->
+
+        <!-- Begin kill running instance of HyvesDesktop the hard way (Win2k/XP/Vista only) -->
+        <registryGet>
+            <key>HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion</key>
+            <name>CurrentBuildNumber</name>
+            <variable>WindowsBuild</variable>
+        </registryGet>
+        <!-- kill running instance of HyvesDesktop on Win2k/XP/Vista only -->
+        <kill>
+            <name>HyvesDesktop.exe</name>
+            <ruleList>
+                <processTest logic="is_running" name="HyvesDesktop.exe" />
+                <compareValues>
+                    <value1>${WindowsBuild}</value1>
+                    <logic>less</logic>
+                    <value2>7100</value2>
+		</compareValues>
+            </ruleList>
+        </kill>
+        <kill>
+            <name>HYVESD~1.EXE</name>
+            <ruleList>
+                <processTest logic="is_running" name="HYVESD~1.EXE" />
+                <compareValues>
+                    <value1>${WindowsBuild}</value1>
+                    <logic>less</logic>
+                    <value2>7100</value2>
+                </compareValues>
+            </ruleList>
+        </kill>
+        <!-- End kill running instance of HyvesDesktop the hard way (Win2k/XP/Vista only) -->
+
+        <!-- Begin show messagebox to Windows7 (and above) users asking them to shut down Hyves Desktop manually -->
+        <showInfo>
+            <text>${msg(install.unableToKill)}</text>
+            <ruleList>
+                <compareValues>
+                    <value1>${WindowsBuild}</value1>
+                    <logic>greater_or_equal</logic>
+                    <value2>7100</value2>
+                </compareValues>
+                <ruleGroup>
+                    <ruleEvaluationLogic>or</ruleEvaluationLogic>
+                    <ruleList>
+                        <processTest logic="is_running" name="HyvesDesktop.exe" />
+                        <processTest logic="is_running" name="HYVESD~1.EXE" />
+                    </ruleList>
+                </ruleGroup>
+            </ruleList>
+        </showInfo>
+        <!-- End show messagebox to Windows7 (and above) users asking them to shut down Hyves Desktop manually -->
+
+        <!-- Begin terminate the installer if a previously installed instance of HyvesDesktop is still running at this point -->
+        <wait>
+            <ms>3000</ms>
+            <ruleEvaluationLogic>or</ruleEvaluationLogic>
+            <ruleList>
+                <processTest logic="is_running" name="HyvesDesktop.exe" />
+                <processTest logic="is_running" name="HYVESD~1.EXE" />
+            </ruleList>
+        </wait>
+        <exit>
+            <exitCode>0</exitCode>
+            <ruleEvaluationLogic>or</ruleEvaluationLogic>
+            <ruleList>
+                <processTest logic="is_running" name="HyvesDesktop.exe" />
+                <processTest logic="is_running" name="HYVESD~1.EXE" />
+            </ruleList>
+        </exit>
+        <!-- End terminate the installer if a previously installed instance of HyvesDesktop is still running at this point -->
+
+        <registryGet>
+            <key>HKEY_LOCAL_MACHINE\Software\Hyves\Hyves Desktop</key>
+            <name></name>
+            <variable>alreadyInstalledDir</variable>
+        </registryGet>
+        <showQuestion>
+            <default>yes</default>
+            <text>${msg(install.alreadyExists)}</text>
+            <variable>deinstallOldVersion</variable>
+            <ruleList>
+                <stringTest text="${alreadyInstalledDir}" type="not_empty" />
+                <compareText>
+                    <logic>does_not_equal</logic>
+                    <text>${alreadyInstalledDir}</text>
+                    <value>NULL</value>
+                </compareText>
+            </ruleList>
+        </showQuestion>
+        <registrySet>
+            <key>HKEY_LOCAL_MACHINE\Software\Hyves\Hyves Desktop</key>
+            <name></name>
+            <type>REG_SZ</type>
+            <value>NULL</value>
+            <ruleList>
+                <compareValues logic="equals" value1="${deinstallOldVersion}" value2="yes" />
+            </ruleList>
+        </registrySet>
+        <runProgram>
+            <abortOnError>0</abortOnError>
+            <program>${alreadyInstalledDir}/Uninstall.exe</program>
+            <programArguments>/S</programArguments>
+            <ruleList>
+                <compareValues value1="${deinstallOldVersion}" logic="equals" value2="yes" />
+            </ruleList>
+        </runProgram>
+        <registryGet>
+            <key>HKEY_LOCAL_MACHINE\Software\Hyves\Hyves Desktop</key>
+            <name>Location</name>
+            <variable>registryInstallDir</variable>
+        </registryGet>
+        <actionGroup>
+            <actionList>
+                 <setInstallerVariable name="installdir" value="${registryInstallDir}"></setInstallerVariable>
+            </actionList>
+            <ruleList>
+             	<stringTest text="${registryInstallDir}" type="not_empty" />
+             	<stringTest text="${cmdLineInstallDir}" type="empty" />
+            </ruleList>
+        </actionGroup>
+        <actionGroup>
+            <actionList>
+                 <setInstallerVariable name="installdir" value="${cmdLineInstallDir}"></setInstallerVariable>
+            </actionList>
+            <ruleList>
+             	<stringTest text="${cmdLineInstallDir}" type="not_empty" />
+            </ruleList>
+        </actionGroup>
+        <actionGroup>
+            <actionList>
+                 <setInstallerVariable name="installationType" value="upgrade"></setInstallerVariable>
+                 <setInstallerVariable name="next_page" value="readytoinstall"></setInstallerVariable>
+            </actionList>
+            <ruleList>
+                 <fileTest condition="exists" path="${installdir}/bin/HyvesDesktop.exe" />
+            </ruleList>
+        </actionGroup>
+    </preInstallationActionList>
+    <compressionAlgorithm>lzma</compressionAlgorithm>
+    <disableSplashScreen>1</disableSplashScreen>
+    <enableRollback>0</enableRollback>
+    <licenseFileEncoding>utf-8</licenseFileEncoding>
+    <requireInstallationByRootUser>1</requireInstallationByRootUser>
+    <saveRelativePaths>1</saveRelativePaths>
+    <componentList>
+        <component>
+            <name>default</name>
+            <description>Default Component</description>
+            <canBeEdited>1</canBeEdited>
+            <selected>1</selected>
+            <show>1</show>
+            <desktopShortcutList>
+                <shortcut>
+                    <comment>Chat with your friends on Hyves</comment>
+                    <exec>"${installdir}/bin/HyvesDesktop.sh" --plugin kwekker</exec>
+                    <icon>${installdir}/bin/HyvesDesktop.png</icon>
+                    <name>${product_fullname} Chat</name>
+                    <path>${installdir}</path>
+                    <platforms>all</platforms>
+                    <runInTerminal>0</runInTerminal>
+                    <windowsExec>${installdir}/bin/HyvesDesktop.exe</windowsExec>
+                    <windowsExecArgs>--plugin kwekker</windowsExecArgs>
+                    <windowsIcon></windowsIcon>
+                    <windowsPath>${installdir}</windowsPath>
+                </shortcut>
+                <shortcut>
+                    <comment>Upload your photos directly to Hyves</comment>
+                    <exec>"${installdir}/bin/HyvesDesktop.sh" --plugin photouploader</exec>
+                    <icon>${installdir}/bin/HyvesDesktop.png</icon>
+                    <name>${product_fullname} Photo Uploader</name>
+                    <path>${installdir}</path>
+                    <platforms>all</platforms>
+                    <runInTerminal>0</runInTerminal>
+                    <windowsExec>${installdir}/bin/HyvesDesktop.exe</windowsExec>
+                    <windowsExecArgs>--plugin photouploader</windowsExecArgs>
+                    <windowsIcon></windowsIcon>
+                    <windowsPath>${installdir}</windowsPath>
+                </shortcut>
+            </desktopShortcutList>
+            <folderList>
+                <folder>
+                    <description>Program Files</description>
+                    <destination>${installdir}</destination>
+                    <name>programfiles</name>
+                    <platforms>all</platforms>
+                    <distributionFileList>
+                        <distributionDirectory>
+                            <origin>../../build/install/bin</origin>
+                        </distributionDirectory>
+                        <distributionDirectory>
+                            <origin>../../build/install/plugins</origin>
+                        </distributionDirectory>
+                    </distributionFileList>
+                </folder>
+                <folder>
+                    <description>Program Files</description>
+                    <destination>${installdir}</destination>
+                    <name>programfileswindows</name>
+                    <platforms>windows</platforms>
+                </folder>
+            </folderList>
+            <startMenuShortcutList>
+                <startMenuShortcut>
+                    <comment>${product_fullname} Chat</comment>
+                    <name>${product_fullname} Chat</name>
+                    <runInTerminal>0</runInTerminal>
+                    <windowsExec>${installdir}/bin/HyvesDesktop.exe</windowsExec>
+                    <windowsExecArgs>--plugin kwekker</windowsExecArgs>
+                    <windowsIcon></windowsIcon>
+                    <windowsPath>${installdir}</windowsPath>
+                </startMenuShortcut>
+                <startMenuShortcut>
+                    <comment>${product_fullname} Photo Uploader</comment>
+                    <name>${product_fullname} Photo Uploader</name>
+                    <runInTerminal>0</runInTerminal>
+                    <windowsExec>${installdir}/bin/HyvesDesktop.exe</windowsExec>
+                    <windowsExecArgs>--plugin photouploader</windowsExecArgs>
+                    <windowsIcon></windowsIcon>
+                    <windowsPath>${installdir}</windowsPath>
+                </startMenuShortcut>
+                <startMenuShortcut>
+                    <comment>Uninstall ${product_fullname}</comment>
+                    <name>Uninstall ${product_fullname}</name>
+                    <runInTerminal>0</runInTerminal>
+                    <windowsExec>${installdir}/${uninstallerName}.exe</windowsExec>
+                    <windowsExecArgs></windowsExecArgs>
+                    <windowsIcon></windowsIcon>
+                    <windowsPath>${installdir}</windowsPath>
+                </startMenuShortcut>
+            </startMenuShortcutList>
+        </component>
+    </componentList>
+    <customLanguageFileList>
+        <language>
+            <code>en</code>
+            <file>hyvesdesktop_en.lng</file>
+        </language>
+        <language>
+            <code>nl</code>
+            <file>hyvesdesktop_nl.lng</file>
+        </language>
+    </customLanguageFileList>
+    <finalPageActionList>
+        <runProgram>
+            <program>${installdir}/bin/HyvesDesktop.exe</program>
+            <programArguments></programArguments>
+            <progressText>${msg(install.finalPage)}</progressText>
+            <abortOnError>0</abortOnError>
+            <showMessageOnError>0</showMessageOnError>
+        </runProgram>
+    </finalPageActionList>
+    <postInstallationActionList>
+        <registrySet>
+            <key>HKEY_CLASSES_ROOT\SystemFileAssociations\image\shell\edit.HyvesPhotoUploader</key>
+            <name></name>
+            <value>Upload to Hyves</value>
+        </registrySet>
+        <registrySet>
+            <key>HKEY_CLASSES_ROOT\SystemFileAssociations\image\shell\edit.HyvesPhotoUploader\command</key>
+            <name></name>
+            <value>${installdir}\bin\HyvesDesktop.exe --plugin photouploader --add-file="%1"</value>
+        </registrySet>
+        <registrySet>
+            <key>HKEY_CLASSES_ROOT\SystemFileAssociations\video\shell\edit.HyvesPhotoUploader</key>
+            <name></name>
+            <value>Upload to Hyves</value>
+        </registrySet>
+        <registrySet>
+            <key>HKEY_CLASSES_ROOT\SystemFileAssociations\video\shell\edit.HyvesPhotoUploader\command</key>
+            <name></name>
+            <value>${installdir}\bin\HyvesDesktop.exe --plugin photouploader --add-file="%1"</value>
+        </registrySet>
+
+        <!-- Begin Remove old bundle directory -->
+        <deleteFile>
+            <path>${installdir}/bin/bundle</path>
+            <ruleList>
+                <fileExists path="${installdir}/bin/bundle" />
+            </ruleList>
+        </deleteFile>
+        <!-- End Remove old bundle directory -->
+
+        <!-- Begin Auto play registration for volume based devices -->
+        <registrySet>
+            <key>HKEY_CLASSES_ROOT\HyvesDesktop.AutoPlay\shell\import\command</key>
+	    <name></name>
+            <value>${installdir}\bin\HyvesDesktop.exe --plugin photouploader --import=%L</value>
+        </registrySet>
+		<registrySet>
+			<key>HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\AutoplayHandlers\Handlers\HDImportPhotosOnArrival</key>
+			<name>Action</name>
+			<value>@${installdir}\bin\HyvesDesktop.exe,-100</value>
+		</registrySet>
+		<registrySet>
+			<key>HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\AutoplayHandlers\Handlers\HDImportPhotosOnArrival</key>
+			<name>DefaultIcon</name>
+			<value>${installdir}\bin\HyvesDesktop.exe,0</value>
+		</registrySet>
+		<registrySet>
+			<key>HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\AutoplayHandlers\Handlers\HDImportPhotosOnArrival</key>
+			<name>InvokeProgID</name>
+			<value>HyvesDesktop.AutoPlay</value>
+		</registrySet>
+		<registrySet>
+			<key>HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\AutoplayHandlers\Handlers\HDImportPhotosOnArrival</key>
+			<name>InvokeVerb</name>
+			<value>import</value>
+		</registrySet>
+		<registrySet>
+			<key>HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\AutoplayHandlers\Handlers\HDImportPhotosOnArrival</key>
+			<name>Provider</name>
+			<value>Hyves Desktop</value>
+		</registrySet>
+		<registrySet>
+            <key>HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\explorer\AutoplayHandlers\EventHandlers\ShowPicturesOnArrival</key>
+			<name>HDImportPhotosOnArrival</name>
+            <value></value>
+        </registrySet>
+        <!-- End Auto play registration for volume based devices -->
+
+        <registryGetMatch>
+            <key>HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Hyves Kwekker</key>
+            <name>UninstallString</name>
+            <variable>kwekker_uninstaller_path</variable>
+        </registryGetMatch>
+        <runProgram>
+            <program>${kwekker_uninstaller_path}</program>
+            <programArguments>/S</programArguments>
+            <ruleList>
+                <fileTest condition="exists" path="${kwekker_uninstaller_path}" />
+            </ruleList>
+        </runProgram>
+        <runProgram>
+            <abortOnError>0</abortOnError>
+            <program>${installdir}/bin/vcredist_x86.exe</program>
+            <programArguments>/q:a /c:"msiexec /i vcredist.msi /qn /l*v ${system_temp_directory.dos}\vcredist_x86.log"</programArguments>
+            <progressText>${msg(install.vcRuntime)}</progressText>
+            <showMessageOnError>0</showMessageOnError>
+            <onErrorActionList>
+                <setInstallerVariable>
+                    <name>vcredistResult</name>
+                    <value>${program_exit_code}</value>
+                </setInstallerVariable>
+            </onErrorActionList>
+        </runProgram>
+        <throwError>
+            <text>VC++ runtime installation error: ${vcredistResult}</text>
+            <ruleList>
+                <compareText>
+                    <logic>does_not_equal</logic>
+                    <nocase>1</nocase>
+                    <text>${vcredistResult}</text>
+                    <value>3010</value>
+                </compareText>
+                <compareText>
+                    <logic>does_not_equal</logic>
+                    <nocase>1</nocase>
+                    <text>${vcredistResult}</text>
+                    <value>0</value>
+                </compareText>
+            </ruleList>
+        </throwError>
+		
+        <!-- Begin Auto play registration for non-volume based devices -->
+        <runProgram>
+            <program>${installdir}\bin\plugins\photouploader\wiaregister.exe</program>
+            <programArguments>register HyvesDesktop "@${installdir}\bin\HyvesDesktop.exe,-100" "${installdir}\bin\HyvesDesktop.exe,0" "${installdir}\bin\HyvesDesktop.exe" --plugin photouploader --autoplay=%1,%2</programArguments>
+        </runProgram>
+        <!-- End Auto play registration for non-volum based devices -->
+
+        <!-- Begin Set startup language according to installer language -->
+	<actionGroup>
+            <actionList>
+                <runProgram>
+                    <program>${installdir}\bin\HyvesDesktop.exe</program>
+                    <programArguments>--language ENG --kill</programArguments>
+                    <ruleList>
+                        <compareText>
+                            <text>${installation_language_code}</text>
+                            <logic>equals</logic>
+                            <value>en</value>
+                        </compareText>
+                    </ruleList>
+                </runProgram>
+                <runProgram>
+                    <program>${installdir}\bin\HyvesDesktop.exe</program>
+                    <programArguments>--language NLD --kill</programArguments>
+                    <ruleList>
+                        <compareText>
+                            <text>${installation_language_code}</text>
+                            <logic>equals</logic>
+                            <value>nl</value>
+                        </compareText>
+                    </ruleList>
+                </runProgram>
+            </actionList>
+	    <ruleList>
+                <compareText>
+                    <text>${installationType}</text>
+                    <logic>does_not_equal</logic>
+                    <value>upgrade</value>
+                </compareText>
+            </ruleList>
+        </actionGroup>
+        <!-- End Set startup language according to installer language -->
+    </postInstallationActionList>
+
+    <preUninstallationActionList>
+        <!-- Begin shut down currently running instance of HyvesDesktop -->
+        <registryGet>
+            <key>HKEY_LOCAL_MACHINE\Software\Hyves\Hyves Desktop\</key>
+            <name>Location</name>
+            <variable>location</variable>
+        </registryGet>
+        <runProgram>
+            <abortOnError>0</abortOnError>
+            <program>${location}/bin/HyvesDesktop.exe</program>
+            <programArguments>--kill</programArguments>
+            <ruleEvaluationLogic>or</ruleEvaluationLogic>
+            <ruleList>
+                <processTest logic="is_running" name="HyvesDesktop.exe"/>
+                <processTest logic="is_running" name="HYVESD~1.EXE"/>
+                <fileTest condition="exists" path="${location}/bin/HyvesDesktop.exe" />
+            </ruleList>
+        </runProgram>
+        <!-- End Begin shut down currently running instance of HyvesDesktop -->
+
+        <!-- Begin Auto play unregistration for non-volume based devices -->
+        <runProgram>
+            <program>${installdir}\bin\plugins\photouploader\wiaregister.exe</program>
+            <programArguments>unregister HyvesDesktop "@${installdir}\bin\HyvesDesktop.exe,-100" "${installdir}\bin\HyvesDesktop.exe,0" "${installdir}\bin\HyvesDesktop.exe" --plugin photouploader --autoplay=%1,%2</programArguments>
+        </runProgram>
+        <!-- End Auto play unregistration for non-volum based devices -->
+    </preUninstallationActionList>
+
+    <postUninstallationActionList>
+        <registryDelete>
+            <key>HKEY_LOCAL_MACHINE\Software\Hyves\Hyves Desktop</key>
+            <name></name>
+        </registryDelete>
+        <registryDelete>
+            <key>HKEY_CLASSES_ROOT\SystemFileAssociations\image\shell\edit.HyvesPhotoUploader</key>
+	    <name></name>
+        </registryDelete>
+        <registryDelete>
+            <key>HKEY_CLASSES_ROOT\SystemFileAssociations\video\shell\edit.HyvesPhotoUploader</key>
+	    <name></name>
+        </registryDelete>
+
+        <!-- Begin AutoPlay registration removal -->
+        <registryDelete>
+            <key>HKEY_CLASSES_ROOT\HyvesDesktop.AutoPlay</key>
+        </registryDelete>
+        <registryDelete>
+            <key>HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\AutoplayHandlers\Handlers\HDImportPhotosOnArrival</key>
+        </registryDelete>
+        <registryDelete>
+            <key>HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\explorer\AutoplayHandlers\EventHandlers\ShowPicturesOnArrival</key>
+            <name>HDImportPhotosOnArrival</name>
+        </registryDelete>
+        <!-- End AutoPlay registration removal -->
+    </postUninstallationActionList>
+    <parameterList>
+        <stringParameter>
+            <name>installtype</name>
+            <cliOptionName>install-type</cliOptionName>
+            <default></default>
+            <value></value>
+            <ask>0</ask>
+        </stringParameter>
+        <stringParameter>
+            <name>cmdLineInstallDir</name>
+            <cliOptionName>prefix</cliOptionName>
+            <default></default>
+            <value></value>
+            <ask>0</ask>
+        </stringParameter>
+        <directoryParameter>
+            <name>installdir</name>
+            <description>Installer.Parameter.installdir.description</description>
+            <explanation>Installer.Parameter.installdir.explanation</explanation>
+            <value>${platform_install_prefix}/${product_fullname}</value>
+            <default>${platform_install_prefix}/${product_fullname}</default>
+            <allowEmptyValue>0</allowEmptyValue>
+            <ask>yes</ask>
+            <mustBeWritable>yes</mustBeWritable>
+            <mustExist>0</mustExist>
+            <width>40</width>
+        </directoryParameter>
+    </parameterList>
+</project>

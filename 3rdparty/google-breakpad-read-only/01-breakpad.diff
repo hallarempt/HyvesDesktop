@@ -1,0 +1,12 @@
+exception_handler.cc
+===================================================================
+--- trunk/3rdparty/google-breakpad-read-only/src/client/linux/handler/exception_handler.cc	2009-03-02 16:11:38 UTC (rev 1931)
++++ trunk/3rdparty/google-breakpad-read-only/src/client/linux/handler/exception_handler.cc	2009-03-02 16:28:49 UTC (rev 1932)
+@@ -38,6 +38,7 @@
+ #include <cstdlib>
+ #include <ctime>
+ #include <linux/limits.h>
++#include <string.h>
+ 
+ #include "client/linux/handler/exception_handler.h"
+ #include "common/linux/guid_creator.h"

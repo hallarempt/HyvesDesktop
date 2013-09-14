@@ -1,0 +1,5 @@
+install.alreadyExists=A previous version of Hyves Desktop has been found on your computer. Do you want to uninstall it first ?
+install.finalPage=Do you want to start ${product_fullname} now?
+install.vcRuntime=Installing VC++ runtime package
+install.updateDetected=${product_fullname} installation found in ${installdir}. Updating to version ${product_version}.
+install.unableToKill=A previous version of Hyves Desktop is currently running- close it and restart the installation.\n\nYou can close Hyves Desktop by right-clicking the icon in the system tray and select Quit.

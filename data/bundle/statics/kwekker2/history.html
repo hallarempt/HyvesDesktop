@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<script type="text/javascript" src="http://localhost/statics/kwekker2/log4javascript.js"></script>
+	<script type="text/javascript">
+		var _layout = new log4javascript.PatternLayout("%d{HH:mm:ss} %c:%p:%m%n");
+		var _consoleAppender = new log4javascript.BrowserConsoleAppender(_layout);
+		_consoleAppender.setThreshold(log4javascript.Level.ALL);
+		function _addAppenders(logger) {
+			logger.addAppender(_consoleAppender);
+		}
+	</script>
+	<script type="text/javascript" src="http://localhost/statics/logging.js"></script>
+	<script type="text/javascript" src="http://localhost/statics/dateformat.js"></script>
+	<script type="text/javascript" src="http://localhost/statics/browserdetection.js"></script>
+	<script type="text/javascript" src="http://localhost/statics/prototype.js"></script>
+	<script type="text/javascript" src="http://localhost/statics/json.js"></script>
+	<script type="text/javascript" src="http://localhost/statics/hyvesdesktop/translator.js"></script>
+	<script type="text/javascript" src="http://localhost/statics/mediaLocator.js"></script>
+	<script type="text/javascript" src="http://localhost/statics/template.js"></script>
+	<script type="text/javascript" src="http://localhost/statics/template_wrapper.js"></script>
+	<script type="text/javascript" src="http://localhost/statics/header.js"></script>
+	<script type="text/javascript" src="http://localhost/precompiled/fancy_layout.js"></script>
+	<script type="text/javascript" src="http://localhost/statics/kwekker2/shared.js"></script>
+	<script type="text/javascript" src="http://localhost/statics/kwekker2/history.js"></script>
+	<script type="text/javascript">
+		window.kwekker = true;
+		
+		window.dateFormat = new DateFormat();
+		window.mediaLocator = new MediaLocator();
+	</script>
+	
+	<link rel="stylesheet" href="http://localhost/statics/prototip/css/prototip.css" type="text/css"></link>
+	<link rel="stylesheet" href="http://localhost/statics/kwekker2/client.css" type="text/css"></link>
+	<link rel="stylesheet" href="http://localhost/statics/style20.css" type="text/css"></link>
+	<link rel="stylesheet" href="http://localhost/statics/layout_820.css" type="text/css"></link>
+	<style type="text/css">
+		html,body { height: 100%; }
+		
+		#historyWindowBody { margin: 0px; overflow: hidden; }
+		
+		.historyLayout { width: 100%; height: 100%; }
+			.historyLayout .header { padding: 0px; height: 53px; background: url('http://localhost/images/backgrounds/page-hdr-full.png') repeat-x; font-size: 11px; }
+				.historyLayout .header td+td { text-align: right; }
+				.historyLayout .header button { margin-right: 10px; }
+				.historyLayout .header input { margin-right: 20px; }
+			.historyLayout #name { padding-left: 10px; font-weight: bold; }
+			
+			.historyLayout .content td { border: none; }
+		
+		#datesList { height: 100%; overflow: auto; background: #fff; list-style: none; padding: 0px; margin: 0px; }
+			#datesList li { cursor: pointer; padding: 2px; padding-left: 4px; }
+			#datesList li.active { color: white; background-color: #5889c2; }
+		
+		#messageContainer { margin: 0px; border-left: 1px solid #7aa3d0; height: 100%; overflow: auto; background: #fff; }
+		
+		.chatmessages img { max-width: 250px !important; float: none !important; }
+	</style>
+</head>
+<body id="historyWindowBody" onload="initHistory()">
+	<table class="historyLayout" cellspacing="0" cellpadding="0">
+		<tr class="header">
+			<td id="toMemberInfo">
+			</td>
+			<td>
+				<input id="searchInput" type="search" placeholder="Search in messages" onkeydown="updateSearch()" />
+			</td>
+		</tr>
+		<tr id="menu" class="menu-bg">
+			<td></td>
+			<td>
+		        <div id="menu" class="menu-bg">
+			<div class="box-menu">
+				<div class="menu-items">
+					<ul>
+						<li class="menu-item right"><a id="deleteButton" href="javascript:window.historyManager.deleteHistory()"><span>Delete history</span></a></li>
+				        </ul>
+				</div>
+			</div>
+		        </div>
+			</td>
+
+		</tr>
+		<tr class="content">
+			<td style="width: 25%; height: 100%">
+				<ol id="datesList">
+				</ol>
+			</td>
+			<td style="width: 75%; height: 100%">
+				<ol id="messageContainer" class="chatmessages">
+				</ol>
+			</td>
+		</tr>
+	</table>
+</body>
+</html>

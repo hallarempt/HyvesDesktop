@@ -1,0 +1,39 @@
+#!/bin/bash
+
+echo Copy the template
+cp "@CMAKE_CURRENT_SOURCE_DIR@/template.dmg.bz2" "@CMAKE_CURRENT_BINARY_DIR@/@CPACK_BUNDLE_NAME@.dmg.bz2"
+
+echo Uncompress the template
+bunzip2 -k "@CMAKE_CURRENT_BINARY_DIR@/@CPACK_BUNDLE_NAME@.dmg.bz2"
+
+PACKAGE="@CMAKE_CURRENT_BINARY_DIR@/@CPACK_BUNDLE_NAME@.dmg"
+MOUNT=/tmp/kwekker
+rm -rf "$MOUNT"
+
+echo attach the template
+mkdir $MOUNT
+hdiutil attach "$PACKAGE" -noautoopen -mountpoint $MOUNT
+
+echo Install the icons
+cp -r "@CPACK_BUNDLE_ICON@" "@CMAKE_BINARY_DIR@/HyvesDesktop.app/Contents/Resources"
+cp -r "@CPACK_PACKAGE_ICON@" "@CMAKE_BINARY_DIR@/HyvesDesktop.app/.VolumeIcon.icns"
+
+echo Install the Info.plist
+cp -r "@CMAKE_CURRENT_BINARY_DIR@/Info.plist" "@CMAKE_BINARY_DIR@/HyvesDesktop.app/Contents"
+
+echo Remove cruft
+find "@CMAKE_BINARY_DIR@/HyvesDesktop.app" -name \*.svn | xargs rm -rf
+
+echo Fix the permissions
+find "@CMAKE_BINARY_DIR@/HyvesDesktop.app" -type d | xargs chmod a+rx
+find "@CMAKE_BINARY_DIR@/HyvesDesktop.app" -type f | xargs chmod a+rx
+
+echo Copy the app
+ditto -V "@CMAKE_BINARY_DIR@/HyvesDesktop.app" "$MOUNT/Hyves Desktop.app"
+
+echo hdiutil detach $MOUNT
+hdiutil detach $MOUNT
+
+echo Convert/copy the dmg
+hdiutil convert "$PACKAGE" -format UDZO -imagekey zlib-level=9 -o "@CMAKE_BINARY_DIR@/@CPACK_PACKAGE_FILE_NAME@.dmg"
+hdiutil internet-enable -yes -quiet "@CMAKE_BINARY_DIR@/@CPACK_PACKAGE_FILE_NAME@.dmg"

@@ -1,0 +1,194 @@
+Index: src/common/mac/dwarf/functioninfo.cc
+===================================================================
+--- src/common/mac/dwarf/functioninfo.cc	(revision 4844)
++++ src/common/mac/dwarf/functioninfo.cc	(working copy)
+@@ -77,8 +77,6 @@
+                                                        dirs_(dirs) {
+   // The dirs and files are 1 indexed, so just make sure we put
+   // nothing in the 0 vector.
+-  assert(dirs->size() == 0);
+-  assert(files->size() == 0);
+   dirs->push_back("");
+   SourceFileInfo s;
+   s.name = "";
+@@ -88,16 +86,12 @@
+ 
+ void CULineInfoHandler::DefineDir(const string& name, uint32 dir_num) {
+   // These should never come out of order, actually
+-  assert(dir_num == dirs_->size());
+   dirs_->push_back(name);
+ }
+ 
+ void CULineInfoHandler::DefineFile(const string& name,
+                                    int32 file_num, uint32 dir_num,
+                                    uint64 mod_time, uint64 length) {
+-  assert(dir_num >= 0);
+-  assert(dir_num < dirs_->size());
+-
+   // These should never come out of order, actually.
+   if (file_num == (int32)files_->size() || file_num == -1) {
+     string dir = dirs_->at(dir_num);
+@@ -186,7 +180,6 @@
+                                                      uint64 data) {
+   if (attr == DW_AT_stmt_list) {
+     SectionMap::const_iterator iter = sections_.find("__debug_line");
+-    assert(iter != sections_.end());
+ 
+     // this should be a scoped_ptr but we dont' use boost :-(
+     auto_ptr<LineInfo> lireader(new LineInfo(iter->second.first + data,
+Index: src/common/mac/dwarf/bytereader.cc
+===================================================================
+--- src/common/mac/dwarf/bytereader.cc	(revision 4844)
++++ src/common/mac/dwarf/bytereader.cc	(working copy)
+@@ -41,7 +41,6 @@
+ 
+ void ByteReader::SetOffsetSize(uint8 size) {
+   offset_size_ = size;
+-  assert(size == 4 || size == 8);
+   if (size == 4) {
+     this->offset_reader_ = &ByteReader::ReadFourBytes;
+   } else {
+@@ -51,7 +50,6 @@
+ 
+ void ByteReader::SetAddressSize(uint8 size) {
+   address_size_ = size;
+-  assert(size == 4 || size == 8);
+   if (size == 4) {
+     this->address_reader_ = &ByteReader::ReadFourBytes;
+   } else {
+Index: src/common/mac/dwarf/bytereader-inl.h
+===================================================================
+--- src/common/mac/dwarf/bytereader-inl.h	(revision 4844)
++++ src/common/mac/dwarf/bytereader-inl.h	(working copy)
+@@ -127,12 +127,10 @@
+ }
+ 
+ inline uint64 ByteReader::ReadOffset(const char* buffer) const {
+-  assert(this->offset_reader_);
+   return (this->*offset_reader_)(buffer);
+ }
+ 
+ inline uint64 ByteReader::ReadAddress(const char* buffer) const {
+-  assert(this->address_reader_);
+   return (this->*address_reader_)(buffer);
+ }
+ 
+Index: src/common/mac/dwarf/dwarf2reader.cc
+===================================================================
+--- src/common/mac/dwarf/dwarf2reader.cc	(revision 4844)
++++ src/common/mac/dwarf/dwarf2reader.cc	(working copy)
+@@ -89,7 +89,6 @@
+ 
+   // First get the debug_abbrev section
+   SectionMap::const_iterator iter = sections_.find("__debug_abbrev");
+-  assert(iter != sections_.end());
+ 
+   abbrevs_ = new vector<Abbrev>;
+   abbrevs_->resize(1);
+@@ -112,22 +111,18 @@
+     abbrev.number = number;
+     abbrevptr += len;
+ 
+-    assert(abbrevptr < abbrev_start + abbrev_length);
+     const uint32 tag = reader_->ReadUnsignedLEB128(abbrevptr, &len);
+     abbrevptr += len;
+     abbrev.tag = static_cast<enum DwarfTag>(tag);
+ 
+-    assert(abbrevptr < abbrev_start + abbrev_length);
+     abbrev.has_children = reader_->ReadOneByte(abbrevptr);
+     abbrevptr += 1;
+ 
+-    assert(abbrevptr < abbrev_start + abbrev_length);
+ 
+     while (1) {
+       const uint32 nametemp = reader_->ReadUnsignedLEB128(abbrevptr, &len);
+       abbrevptr += len;
+ 
+-      assert(abbrevptr < abbrev_start + abbrev_length);
+       const uint32 formtemp = reader_->ReadUnsignedLEB128(abbrevptr, &len);
+       abbrevptr += len;
+       if (nametemp == 0 && formtemp == 0)
+@@ -138,7 +133,6 @@
+       const enum DwarfForm form = static_cast<enum DwarfForm>(formtemp);
+       abbrev.attributes.push_back(make_pair(name, form));
+     }
+-    assert(abbrev.number == abbrevs_->size());
+     abbrevs_->push_back(abbrev);
+   }
+ }
+@@ -203,7 +197,6 @@
+     case DW_FORM_ref_addr:
+       // DWARF2 and 3 differ on whether ref_addr is address size or
+       // offset size.
+-      assert(header_.version == 2 || header_.version == 3);
+       if (header_.version == 2) {
+         return start + reader_->AddressSize();
+       } else if (header_.version == 3) {
+@@ -244,21 +237,17 @@
+   const char* headerptr = buffer_;
+   size_t initial_length_size;
+ 
+-  assert(headerptr + 4 < buffer_ + buffer_length_);
+   const uint64 initial_length = ReadInitialLength(headerptr, reader_,
+                                                   &initial_length_size);
+   headerptr += initial_length_size;
+   header_.length = initial_length;
+ 
+-  assert(headerptr + 2 < buffer_ + buffer_length_);
+   header_.version = reader_->ReadTwoBytes(headerptr);
+   headerptr += 2;
+ 
+-  assert(headerptr + reader_->OffsetSize() < buffer_ + buffer_length_);
+   header_.abbrev_offset = reader_->ReadOffset(headerptr);
+   headerptr += reader_->OffsetSize();
+ 
+-  assert(headerptr + 1 < buffer_ + buffer_length_);
+   header_.address_size = reader_->ReadOneByte(headerptr);
+   reader_->SetAddressSize(header_.address_size);
+   headerptr += 1;
+@@ -268,14 +257,11 @@
+   // This check ensures that we don't have to do checking during the
+   // reading of DIEs. header_.length does not include the size of the
+   // initial length.
+-  assert(buffer_ + initial_length_size + header_.length <=
+-        buffer_ + buffer_length_);
+ }
+ 
+ uint64 CompilationUnit::Start() {
+   // First get the debug_info section
+   SectionMap::const_iterator iter = sections_.find("__debug_info");
+-  assert(iter != sections_.end());
+ 
+   // Set up our buffer
+   buffer_ = iter->second.first + offset_from_section_start_;
+@@ -388,7 +374,6 @@
+     case DW_FORM_ref_addr:
+       // DWARF2 and 3 differ on whether ref_addr is address size or
+       // offset size.
+-      assert(header_.version == 2 || header_.version == 3);
+       if (header_.version == 2) {
+         handler_->ProcessAttributeUnsigned(dieoffset, attr, form,
+                                            reader_->ReadAddress(start));
+@@ -429,10 +414,8 @@
+     }
+       break;
+     case DW_FORM_strp: {
+-      assert(string_buffer_ != NULL);
+ 
+       const uint64 offset = reader_->ReadOffset(start);
+-      assert(string_buffer_ + offset < string_buffer_ + string_buffer_length_);
+ 
+       const char* str = string_buffer_ + offset;
+       handler_->ProcessAttributeString(dieoffset, attr, form,
+@@ -535,11 +518,8 @@
+ 
+   lineptr += initial_length_size;
+   header_.total_length = initial_length;
+-  assert(buffer_ + initial_length_size + header_.total_length <=
+-        buffer_ + buffer_length_);
+ 
+   // Address size *must* be set by CU ahead of time.
+-  assert(reader_->AddressSize() != 0);
+ 
+   header_.version = reader_->ReadTwoBytes(lineptr);
+   lineptr += 2;

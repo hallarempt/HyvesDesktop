@@ -1,0 +1,25 @@
+Index: application/models/common.php
+===================================================================
+--- application/models/common.php	(revision 2881)
++++ application/models/common.php	(working copy)
+@@ -75,6 +75,7 @@
+             'reports.reason',
+             'reports.last_crash',
+             'reports.install_age'
++            'reports.logfile'
+         );
+         $tables = array(
+         );
+Index: js/__utm.js
+===================================================================
+--- js/__utm.js	(revision 2881)
++++ js/__utm.js	(working copy)
+@@ -7,7 +7,7 @@
+ 
+ //-- UTM User Settings
+ var _ufsc=1;			// set client info flag (1=on|0=off)
+-var _udn="crash-stats.mozilla.com";		// (auto|none|domain) set the domain name for cookies
++var _udn="crashes.hyves.org";		// (auto|none|domain) set the domain name for cookies
+ var _uhash="on";		// (on|off) unique domain hash for cookies
+ var _utimeout="1800";   	// set the inactive session timeout in seconds
+ var _ugifpath="/img/__utm.gif";	// set the web path to the __utm.gif file

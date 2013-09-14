@@ -1,0 +1,30 @@
+body { font-family: Verdana, Arial, Helvetica; }
+
+h1 { background: url(http://localhost/images/backgrounds/buzz-hdr.png) repeat-x; margin: 0px; padding: 2px 8px; width: 100%; height: 20px; color: #fff; font-size: 16px; font-weight: bold; }
+
+.header { height: 28px !important; background: none !important; }
+
+.buzz { }
+	.buzz>.notifications { }
+		.buzz>.notifications .header { position: absolute; top: 0px; left: 0px; width: 100%; height: 28px; background: url(http://localhost/images/backgrounds/box-menu-bg-dflt.png) repeat-x !important; color: #fff; font-weight: bold; padding: 5px; z-index: 100; }
+			.buzz>.notifications .header .close { display: block; float: right; width: 16px; height: 16px; background: url(http://localhost/images/hyppo/notificationsclosebutton.png) no-repeat; cursor: pointer; }
+			.buzz>.notifications .header .close:pressed { background: url(http://localhost/images/hyppo/notificationsclosebuttonpressed.png) no-repeat; }
+		.buzz>.notifications .content { position: absolute; top: 28px; left: 0px; bottom: 0px; width: 100%; background-color: #fff; z-index: 100; overflow: auto; }
+			.buzz>.notifications .content .date { font-size: 7pt; color: #666; }
+			.buzz>.notifications .content .deleteNotifications { margin: 3px 5px 0px; text-align: right; color: #2367b0; cursor: pointer; }
+	.buzz>.header { position: absolute; top: 0px; left: 0px; width: 100%; }
+	.buzz>.content { position: absolute; top: 28px; left: 0px; bottom: 2em; width: 100%; overflow: auto; }
+		.buzz>.content contentCell { overflow: hidden; }
+	.buzz>.footer { position: absolute; bottom: 0px; left: 0px; right: 0px; height: 2em; border-top: 1px solid #b5b5b5; padding: 3px 1em 0px 0px; text-align: right; font-weight: normal; font-size: 11px !important; }
+		.buzz>.footer a:link,a:hover,a:active,a:visited { color: #4f9ede !important; text-decoration: none; }
+		.buzz>.footer img { vertical-align: baseline; }
+	
+.feed { width: 100%; height: 100%; }
+	.feed tr { border-bottom: 1px solid #cfdfef; }
+	.feed td { vertical-align: top; border-bottom: 1px solid #cfdfef; padding-top: 5px; }
+	.feed .extra-small { margin: 1px 3px 0px; }
+	
+	.feed .buzz-descr { font-size: 8pt; }
+		.feed .buzz-descr .nick a { font-weight: bold; }
+		.feed .buzz-descr .date { font-size: 7pt; float: right; padding: 0 10px 0 0; color: #666; }
+		.feed .buzz-descr p { margin: 0px; word-wrap: break-word; }

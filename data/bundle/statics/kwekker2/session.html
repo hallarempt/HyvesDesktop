@@ -1,0 +1,124 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<script type="text/javascript" src="http://localhost/statics/kwekker2/log4javascript.js"></script>
+	<script type="text/javascript">
+		var _layout = new log4javascript.PatternLayout("%d{HH:mm:ss} %c:%p:%m%n");
+		var _consoleAppender = new log4javascript.BrowserConsoleAppender(_layout);
+		_consoleAppender.setThreshold(log4javascript.Level.ALL);
+		function _addAppenders(logger) {
+			logger.addAppender(_consoleAppender);
+		}
+	</script>
+	<script type="text/javascript" src="http://localhost/statics/logging.js"></script>
+	<script type="text/javascript" src="http://localhost/statics/fastinit.js"></script>
+	<script type="text/javascript" src="http://localhost/statics/browserdetection.js"></script>
+	<script type="text/javascript" src="http://localhost/statics/dateformat.js"></script>
+	<script type="text/javascript" src="http://localhost/statics/simpledateformat.js"></script>
+	<script type="text/javascript" src="http://localhost/statics/prototype.js"></script>
+	<script type="text/javascript" src="http://localhost/statics/scriptaculous/builder.js"></script>
+	<script type="text/javascript" src="http://localhost/statics/scriptaculous/effects.js"></script>
+	<script type="text/javascript" src="http://localhost/statics/scriptaculous_core_extensions.js"></script>
+	<script type="text/javascript" src="http://localhost/statics/json.js"></script>
+	<script type="text/javascript" src="http://localhost/statics/EventHandler.js"></script>
+	<script type="text/javascript" src="http://localhost/statics/template.js"></script>
+	<script type="text/javascript" src="http://localhost/statics/template_wrapper.js"></script>
+	<script type="text/javascript" src="http://localhost/statics/header.js"></script>
+	<script type="text/javascript" src="http://localhost/precompiled/headerTemplates_locale.js"></script>
+	<script type="text/javascript" src="http://localhost/precompiled/chatTemplates_locale.js"></script>
+	<script type="text/javascript" src="http://localhost/precompiled/fancy_layout.js"></script>
+	<script type="text/javascript" src="http://localhost/statics/hyvesdesktop/translator.js"></script>
+	<script type="text/javascript" src="http://localhost/statics/kwekker2/client.js"></script>
+	<script type="text/javascript" src="http://localhost/statics/kwekker2/container.js"></script>
+	<script type="text/javascript" src="http://localhost/statics/kwekker2/shared.js"></script>
+	<script type="text/javascript" src="http://localhost/statics/kwekker2/session.js"></script>
+	<script type="text/javascript" src="http://localhost/statics/number-functions.js"></script>
+	<script type="text/javascript" src="http://localhost/statics/mediaLocator.js"></script>
+	<script type="text/javascript">
+		suppressSiteErrors = false; // do not suppress default handler
+		var mode = 4;
+		window.kwekker = true;
+	</script>
+
+	<link rel="stylesheet" href="http://localhost/statics/prototip/css/prototip.css" type="text/css"></link>
+	<link rel="stylesheet" href="http://localhost/statics/kwekker2/client.css" type="text/css"></link>
+	<link rel="stylesheet" href="http://localhost/statics/style20.css" type="text/css"></link>
+	<link rel="stylesheet" href="http://localhost/statics/layout_820.css" type="text/css"></link>
+	<style type="text/css">
+		html,body { height: 100%; }
+		
+		textarea { resize: none; }
+		
+		.SessionBody { margin: 0px; padding: 0px; }
+		.SessionHeader { font-weight: bold; }
+		
+		.rte_content { width: 371px; }
+		
+		.usr-www { cursor: default; }
+		
+		button.huge+button.large { margin: 9px 0px; }
+		
+		.chatmessages img { max-width: 250px !important; float: none !important; }
+	</style>
+</head>
+<body class="ChatBody" style="margin: 0px; overflow: hidden">
+	<div id="participantsInfo" class="header">
+	</div>
+	<div id="menu" class="menu-bg">
+		<div class="box-menu">
+			<div class="menu-items">
+				<ul>
+					<li class="menu-item right"><a id="historyLink" href="javascript:void(0)"><span>History</span></a></li>
+					<li class="menu-item right"><a id="inviteLink" href="javascript:void(0)"><span>Invite</span></a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div id="chatsession_container" style="width: 100%; overflow: auto; background: #fff">
+		<ol id="chatsession" class="chatmessages"></ol>
+	</div>
+	<div id="windowBottom">
+		<div style="padding: 0px 5px 5px">
+			<div id="chatsession_statusmessage" class="statusmessage"></div>
+		</div>
+		<div id="menu" class="menu-bg">
+			<div class="box-menu">
+				<div class="menu-items">
+					<ul>
+						<li id="chatTab" class="menu-item first current"><a href="javascript:xmppSession.setMessageType('chat')"><span id="chatTabLabel">Chat</span></a></li>
+						<li id="scrapTab" class="menu-item"><a href="javascript:xmppSession.setMessageType('scrap')"><span id="scrapTabLabel">Scrap</span></a></li>
+						<li id="emailTab" class="menu-item"><a href="javascript:xmppSession.setMessageType('email')"><span id="emailTabLabel">Email</span></a></li>
+						<li id="privateMessageTab" class="menu-item"><a href="javascript:xmppSession.setMessageType('privateMessage')"><span id="privateMessageTabLabel">Private message</span></a></li>
+						<li id="smsTab" class="menu-item"><a href="javascript:xmppSession.setMessageType('sms')"><span id="smsTabLabel">SMS</span></a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div id="subjectrow" style="display: none; margin-left: 5px;">
+			Subject: <input id="messageSubject" type="text" name="txtMessageSubject" style="width: 290px" />                    
+		</div>                                                                                                                       
+		<div id="sms_subject" style="display: none; margin-left: 5px;"></div>
+		<div style="width: 100%; clear: both">
+			<div style="display: inline-block; width: 381px">
+				<div id="uiRTEContainer"></div>
+			</div>
+			<div style="display: inline-block; width: 130px; padding: 9px 0px 0px 9px; vertical-align: top">
+				<button id="uiButtonSend" class="huge" style="width: 100%"><span>Send</span></button>
+				<button id="uiButtonBuzz" class="large" style="width: 100%" onclick="xmppSession.sendBuzz();"><span>Buzzer</span></button>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+		if (window.Hyves && window.FastInit) {
+			FastInit.addOnLoad(function() {
+				Hyves.fireOnDomReady();
+				try {
+					sessionWindowOnload();
+				} catch(e) {
+					logging.error('session.html: ' + e, e);
+				}
+			});
+		}
+	</script>
+</body>
+</html>

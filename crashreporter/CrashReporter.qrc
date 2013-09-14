@@ -1,0 +1,19 @@
+<RCC>
+    <qresource prefix="/" >
+        <file>../data/appicon_16.png</file>
+        <file>../data/appicon_16_inactive.png</file>
+        <file>../data/appicon_16_mac_inactive.png</file>
+        <file>../data/appicon_16_r.png</file>
+        <file>../data/appicon_22_active.png</file>
+        <file>../data/appicon_22_inactive.png</file>
+        <file>../data/appicon_22_r.png</file>
+        <file>../data/appicon_24.png</file>
+        <file>../data/appicon_24_r.png</file>
+        <file>../data/appicon_32.png</file>
+        <file>../data/appicon_32_r.png</file>
+        <file>../data/appicon_64.png</file>
+        <file>../data/appicon_64_r.png</file>
+        <file>../data/appicon_128.png</file>
+        <file>../data/appicon_128_r.png</file>
+    </qresource>
+</RCC>

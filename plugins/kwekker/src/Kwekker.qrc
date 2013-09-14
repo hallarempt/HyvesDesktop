@@ -1,0 +1,15 @@
+<!DOCTYPE RCC>
+<RCC version="1.0">
+<qresource prefix="/plugins/kwekker/">
+<!-- artwork -->
+	<file alias="kwekker">../data/headerimage_windowsinstaller.png</file>
+<!-- preferences -->
+	<file alias="preferences22">../data/preferences22.png</file>
+	<file alias="preferences64">../data/preferences64.png</file>
+	<file alias="sound22">../data/sound22.png</file>
+	<file alias="sound64">../data/sound64.png</file>
+	
+	<file>GeneralSettingsPage.ui</file>
+	<file>NotificationsSettingsPage.ui</file>
+</qresource>
+</RCC>

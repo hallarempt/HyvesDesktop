@@ -1,0 +1,13 @@
+Index: src/processor/minidump_stackwalk.cc
+===================================================================
+--- src/processor/minidump_stackwalk.cc	(revision 310)
++++ src/processor/minidump_stackwalk.cc	(working copy)
+@@ -36,6 +36,7 @@
+ #include <cstdlib>
+ #include <string>
+ #include <vector>
++#include <cstring>
+ 
+ #include "google_breakpad/processor/basic_source_line_resolver.h"
+ #include "google_breakpad/processor/call_stack.h"
+

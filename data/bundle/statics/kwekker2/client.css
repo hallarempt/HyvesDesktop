@@ -1,0 +1,193 @@
+
+body { margin: 0px; text-align: left; line-height: 160%; background: #fff; font-size: 8pt; font-family: Verdana; }
+
+a:link { text-decoration: none; color: #2367b0 !important; }
+a:visited { text-decoration: none; color: #2367b0 !important; }
+a:hover { text-decoration: underline; color: #2367b0 !important; }
+a:active { text-decoration: none;color: #2367b0 !important; }
+
+.ChatBody { margin: 0px; background-color: #fff; }
+
+.header { width: 100%; height: 53px; background: url(http://localhost/images/backgrounds/page-hdr-full.png) repeat-x; margin: 0 auto; padding: 0px; z-index: 1; position: relative; font-size: 11px; }
+	.header p { margin: 0px; }
+
+#usr-optns { text-align: left; margin: 0px; line-height: 120%; }
+	#usr-optns .avatar { float: left; margin: 3px 8px 0px 3px;  }
+		#usr-optns .avatar img { margin: 0; padding: 0; border: 0; }
+	#usr-optns ul { margin: 0px; padding: 5px 0px 0px; }
+		#usr-optns li { display: block; float: left; }
+			#usr-optns a { color: #1e1e1e; cursor: pointer; }
+			#usr-optns li ul { float: left; }
+			#usr-optns li ul li { background: none; }
+			#usr-optns li a { padding: 0 16px 0 8px;  z-index: 5; position: relative; outline: none; }
+			#usr-optns li#usr-optns-msgs { background: none; }
+				#usr-optns li#usr-optns-msgs a { background: none; padding: 0 0 0 6px; }
+		#usr-optns-status { position: relative; top: 4px; background-position: 100% 2px !important; }
+		#usr-status,
+		#usr-optns-status a,
+		#usr-optns-my-menu a { text-decoration: none; }
+		
+		/* Online Status */
+		#usr-status { position: absolute; background: url(http://localhost/images/backgrounds/dropdown-status.png) no-repeat; width: 195px; height: 316px; z-index: 4; text-align: left; margin: -30px 0 0 -22px; padding: 40px 0 0 23px; display: none; }
+			#usr-status ul { margin: 0 0 24px 0; padding: 0px; }
+			#usr-optns li#usr-optns-status a { padding: 3px 16px 0 0; }
+				#usr-optns li#usr-optns-status li { float: none; display: block; clear: left; padding: 3px 0 0 0; }
+				#usr-optns #usr-status a { color: #4d96da; font-size: 110%; padding: 0; }
+					#usr-optns #usr-status a:hover { text-decoration: underline; }
+			#usr-status p { width: 170px; font-size: 105%; line-height: 105%; margin: 0 0 10px 0; clear: left; }
+		#usr-optns-status:hover #usr-status { display: block; }
+		.usr-www { height: 1.4em; overflow: hidden; }
+
+.status { background-repeat: no-repeat !important; background-position: 0 1px; padding-left: 19px !important; margin-top: 3px; }
+	.online { background-image: url(http://localhost/images/hyppo/status_online.png) !important; }
+	.away { background-image: url(http://localhost/images/hyppo/status_away.png) !important; }
+	.offline { background-image: url(http://localhost/images/hyppo/status_offline.png) !important; }
+	.lunch { background-image: url(http://localhost/images/hyppo/status_lunch.png) !important; }
+	.berightback { background-image: url(http://localhost/images/hyppo/status_berightback.png) !important; }
+	.busy { background-image: url(http://localhost/images/hyppo/status_busy.png) !important; }
+	.phone { background-image: url(http://localhost/images/hyppo/status_phone.png) !important; }
+
+.menu-bg { width: 100%; height: 28px; background-image: url(http://localhost/images/backgrounds/box-menu-bg-dflt.png); background-repeat: repeat-x; margin: 0px; overflow: hidden; }
+	.menu-bg input { position: absolute; left: 10px; right: 10px; }
+
+.usr-www .dropdown { margin: -11px 5px 0px -13px; position: absolute; display: none; }
+.usr-www:hover .dropdown { display: block; }
+
+#searchbox { height: 28px; z-index: 1; }
+
+.NotificationBody { padding: 5px; height: 70px; }
+.NotificationImage { float: left; margin-right: 5px; }
+
+.RichTextControlMenu { font-size: 8.5pt; border: 0px solid #fc6; }
+.RichTextCategoryHeader { font-size: 8pt; color: #fff; }
+.RichTextTextArea { border-bottom: 1px solid #cfdfef; border-right: 1px solid #cfdfef; font-size: 9pt; }
+.RichTextEditorBold { background-color: #fc6; font-weight: bold; font-size: 8pt; color: #fff; padding: 1px 3px 1px 3px; border: 1px solid #fff; cursor: pointer; }
+.RichTextEditorItalics { background-color: #fc6; font-style: italic; font-size: 8pt; color: #fff; padding: 1px 3px 1px 3px; border: 1px solid #fff; cursor: pointer; }
+.RichTextEditorLinkDesktop { background-color: #fc6; font-style: normal; font-size: 8pt; color: #fff; padding: 1px 3px 1px 3px; border: 1px solid #fff; cursor: pointer; }
+.RichTextEditorLink { height: 26px; width: 75px; margin: 2px; }
+.RichTextEditorSubmit { background-color: gray; color: #000; font-size: 9pt; font-weight: bold; border: 1px solid #cfdfef; }
+
+.MarginBottom { margin-bottom: 2px; }
+
+.personal_rte_add_tabs .current a { background-color: #b0cae5; border-bottom: solid 1px #b0cae5 !important; color: black !important; }
+.personal_rte_add_tabs .current a:hover { background-color: #b0cae5; }
+
+.avatar { text-align: center; padding: 2px; overflow: hidden; }
+	.avatar a { display: block; overflow: hidden; }
+
+.avatar.extra-small { width: 28px; background: url(http://localhost/images/backgrounds/avatar-bg-24.png) no-repeat; }
+	.avatar.extra-small img { width: 24px; height: 24px; }
+.avatar.small { width: 46px; background: url(http://localhost/images/backgrounds/avatar-bg-42.png) no-repeat; }
+	.avatar.small img { width: 42px; height: 42px; }
+.avatar.medium { width: 64px; background: url(http://localhost/images/backgrounds/avatar-bg-64.png) no-repeat; }
+	.avatar.medium img { width: 64px; height: 64px; }
+.avatar.large { width: 75px; background: url(http://localhost/images/backgrounds/avatar-bg-75.png) no-repeat; }
+	.avatar.large img { width: 75px; height: 75px; }
+
+.RosterItem { font-size: 8pt; font-weight: bold; color: #0055a4; border-bottom: 1px solid #cfdfef; height: 36px; padding-top: 4px; }
+.RosterItem:hover { background-color: #ebf2f9; }
+.RosterItem.selected { background-color: #ebf2f9; }
+.RosterItem:active { background-color: #ffc; }
+	.RosterItem .avatar { margin: 0px 3px; float: left; }
+	.RosterItem img { max-width: 100px !important; }
+.RosterItemName { overflow: hidden; height: 25px; padding-left: 4px; padding-top: -1px; padding-right: 20px; line-height: 28px; background-repeat: no-repeat; background-position: right; }
+	.RosterItemName a:link,a:visited,a:hover,a:active { color: #557ac4; }
+	.RosterItemName img { display: inline; }
+	.RosterItemName .nick { float: left; max-width: 70%; overflow: hidden; }
+	.RosterItemName .www { overflow: hidden; padding-left: 10px; font-weight: normal; color: #555; }
+	.RosterItemName .wwwTime { overflow: hidden; padding-left: 3px; font-weight: normal; font-size: 7pt; color: #666; }
+.RosterItemName.online { background-image: url("http://localhost/images/hyppo/status_online.png"); }
+.RosterItemName.offline { background-image: url("http://localhost/images/hyppo/status_offline.png"); }
+.RosterItemName.lunch { background-image: url("http://localhost/images/hyppo/status_lunch.png"); }
+.RosterItemName.berightback { background-image: url("http://localhost/images/hyppo/status_berightback.png"); }
+.RosterItemName.busy { background-image: url("http://localhost/images/hyppo/status_busy.png"); }
+.RosterItemName.away { background-image: url("http://localhost/images/hyppo/status_away.png"); }
+.RosterItemName.phone { background-image: url("http://localhost/images/hyppo/status_phone.png"); }
+
+.box-menu { width: 100%; clear: left; background: none !important; }
+	.box-menu ul { background: url(http://localhost/images/backgrounds/box-menu-bg-dflt.png) repeat-x; width: 100%; padding: 0px; height: 29px; margin: 0px; }
+	.box-menu .menu-items { background: none !important; }
+	.box-menu .menu-items .current { position: relative; top: -1px;background: #fff url(http://localhost/images/backgrounds/box-menu-current-right.png) 100% 0 no-repeat; margin: 0 0 0 -2px; }
+		.box-menu .menu-items .current a { position: relative; top: -1px; background: url(http://localhost/images/backgrounds/box-menu-current-left.png) no-repeat; color: #ff9900; }
+			.box-menu .menu-items .current span { background: none; padding: 11px 14px 10px 15px !important; color: #ff9900; }
+		.box-menu .menu-items .first span { padding: 8px 14px 10px 19px; }
+			.box-menu .menu-items .current.first span { padding: 12px 16px 10px 15px !important;  }
+		.box-menu .menu-items .current.first { background: #fff url(http://localhost/images/backgrounds/box-menu-current-right.png) 100% 0 no-repeat !important; margin: 0 0 0 2px !important; }
+	
+	.box-menu .menu-items .current.first a { position: relative; top: -2px; background: url(http://localhost/images/backgrounds/box-menu-current-left.png) no-repeat 0px 2px !important; }
+		.box-menu .menu-items .active.first { background: #69a3da !important; }
+			.box-menu .menu-items .active.first a span { background: url(http://localhost/images/backgrounds/nav-bg-down.png) -2px 0 no-repeat !important; padding: 8px 14px 9px 19px; }
+		.box-menu .menu-items .current.active span { background: none !important; }
+		.box-menu .menu-items .current-open span { background: none !important; }
+		.box-menu .menu-items .current.first { background: #fff; margin: 0 0 0 -2px; }
+			.box-menu .menu-items .current.first a { color: #ff9900; }
+	
+	.menu-items li { float: left; line-height: 100%; display: block; }
+		.menu-items a { float: left; color: #fff; font-family: "Trebuchet MS"; font-size: 10pt; font-weight: bold; background: url(http://localhost/images/dividers/nav-dvdr.png) 100% 2px no-repeat; outline: none; }
+			.menu-items a:hover { text-decoration: none; }
+			.menu-items span { display: block; padding: 8px 14px 11px 13px; color: #fff; }
+	
+	.menu-items li.right { float: right; }	
+		.menu-items li.right a { color: #fff; font-family: "Trebuchet MS"; font-size: 10pt; font-weight: bold; background: url(http://localhost/images/dividers/nav-dvdr.png) 0% 2px no-repeat; outline: none; }
+	
+	.menu-items .current,
+	.menu-items .active { background: #69a3da; margin: 0 0 0 -2px; position: relative; }
+		.menu-items .current span { background: url(http://localhost/images/backgrounds/nav-bg-current.png) 0 0 no-repeat; padding: 9px 14px 8px 15px; }
+		.menu-items .menu-item:hover span { background: url(http://localhost/images/backgrounds/nav-mo-bg.png); }
+		.menu-items .current:hover span { background: none !important; }
+		.menu-items .active span { background: url(http://localhost/images/backgrounds/nav-bg-down.png) 0 0 no-repeat !important; padding: 9px 14px 7px 15px; }
+		
+	.menu-items .first { }
+		.menu-items .first a span { padding: 8px 14px 10px 14px; }
+		.menu-items .current.first,
+		.menu-items .active.first { margin: 0; }
+		.menu-items .current.first a span,
+		.menu-items .active.first a span { padding: 9px 14px 8px 14px; background: none !important; } 
+		.menu-items .current.first { background: url(http://localhost/images/backgrounds/nav-bg-first-current.png) no-repeat !important; }
+		.menu-items .active.first { background: url(http://localhost/images/backgrounds/nav-bg-first-down.png) no-repeat !important; }
+
+.chatmessages { list-style-type: none; margin-top: 10px; padding: 0px; }
+	.chatmessages li { margin: 10px; }
+	.chatmessages li.history { opacity: 0.5; }
+		.chatmessages li cite { height: 24px; width: 35px; float: left; background: transparent url(http://localhost/images/arrow.png) no-repeat 19px 3px; }
+			.chatmessages li cite img { border: 1px solid #aaa; width: 24px; height: 24px; }
+		.chatmessages li blockquote { margin: 0px 0px 0px 34px; padding: 0px 7px; border: 1px solid #aaa; background-color: #f3f1ef; -webkit-border-radius: 5px; }
+			.chatmessages li blockquote p { margin-top: 5px; margin-bottom: 5px; }
+	
+	.chatmessages li.ownMessage blockquote { background-color: #fef7e7; }
+	.chatmessages li.otherMessage blockquote { background-color: #e8f2fc; }
+
+	.chatmessages li.message { color: gray; font-size: 8pt; margin: 10px 10px 0px; }
+		.chatmessages li.message hr { padding: 0px; height: 1px; border: none; background-color: #bfb6b5; }
+		.chatmessages li.message label { margin-left: 100px; padding: 0px 8px; position: relative; top: -8px; background-color: white; }
+
+.statusmessage { min-height: 1.5em; font-size: 11px; color: #696969; background: #fff; }
+
+button,.button input { padding: 1px }
+button,.button { background: url(http://localhost/images/buttons/btn-right.png) 100% 0 no-repeat; padding-right: 3px; display: inline-block; height: 22px; margin: 0 0 0 5px; }
+button,.button span { background: url(http://localhost/images/buttons/btn.png) 0 0 no-repeat; display: inline-block; height: 18px; padding: 1px 11px 3px 15px }
+button,.button input { border: 0; background: transparent none }
+
+button.large { background: url(http://localhost/images/buttons/btn-large-left.png) 0 1px no-repeat; height: 29px; padding: 0px 0px 0px 3px; border: 0; position: relative; margin: -1px 0px 0px; }
+	button.large strong { display: block; background: url(http://localhost/images/buttons/btn-large-right.png) 100% 1px no-repeat; height: 28px; padding: 7px 7px 7px 4px; margin: -1px 0px 0px; }
+	button.large span { display: block; background: url(http://localhost/images/buttons/btn-large-right.png) 100% 1px no-repeat; height: 28px; padding: 7px 7px 7px 4px; margin: -1px 0px 0px; }
+	button.large img { position: relative; top: 4px; }
+button.large:active { background-image: url(http://localhost/images/buttons/btn-large-left-pressed.png) }
+	button.large:active strong { background-image: url(http://localhost/images/buttons/btn-large-right-pressed.png); }
+	button.large:active span { background-image: url(http://localhost/images/buttons/btn-large-right-pressed.png); }
+button.large.disabled { color: #777 !important; }
+
+button.huge { background: url(http://localhost/images/buttons/btn-huge-left.png) 0 1px no-repeat; height: 71px; padding: 0px 0px 0px 3px; border: 0; position: relative; margin: -1px 0px 0px; }
+	button.huge strong { display: block; background: url(http://localhost/images/buttons/btn-huge-right.png) 100% 1px no-repeat; height: 71px; padding: 28px 7px 7px 4px; margin: -1px 0px 0px; }
+	button.huge span { display: block; background: url(http://localhost/images/buttons/btn-huge-right.png) 100% 1px no-repeat; height: 71px; padding: 28px 7px 7px 4px; margin: -1px 0px 0px; }
+button.huge:active { background-image: url(http://localhost/images/buttons/btn-huge-left-pressed.png) }
+	button.huge:active strong { background-image: url(http://localhost/images/buttons/btn-huge-right-pressed.png); }
+	button.huge:active span { background-image: url(http://localhost/images/buttons/btn-huge-right-pressed.png); }
+button.huge.disabled { color: #777 !important; }
+
+.button-large { width: 210px; height: 22px; background: url(http://localhost/images/buttons/btn-large.png) no-repeat; font-weight: bold; }
+
+.dropdown { background-color: #fff; -webkit-border-radius: 5px; -webkit-box-shadow: 2px 3px 24px rgba(0, 0, 0, 0.5); border: 1px solid #d5e8fb; }
+	.dropdown-content { padding: 8px 12px 8px 12px; line-height: 18px; }
+	.dropdown-header { padding: 7px 12px 5px 12px; border-bottom: 1px solid #ddd; }
+	.dropdown-footer { padding: 5px 12px 7px 12px; border-top: 1px solid #ddd; }

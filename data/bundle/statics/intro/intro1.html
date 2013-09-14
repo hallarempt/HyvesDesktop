@@ -1,0 +1,77 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+		<title>Hyves Desktop Landing Page</title>
+		<script type="text/javascript" src="http://localhost/statics/hyvesdesktop/translator.js"></script>
+		<script type="text/javascript" src="http://localhost/statics/intro/landingpagecounter.js"></script>
+		<script type="text/javascript">
+			function init() {
+				
+				document.getElementById('text1').innerHTML = tr("Chat with your online friends, including all Hyves smileys");
+				document.getElementById('text2').innerHTML = tr("The latest photos, blogs and WWW's of your friends always on your computer!");
+				document.getElementById('text3').innerHTML = tr("Easy and quickly uploading of many photos with the Hyves Photo Uploader");
+				document.getElementById('text4').innerHTML = tr("Send scraps, SMS and emails with one click!");
+				document.getElementById('text5').innerHTML = tr("Notifications of new scraps, messages and reactions in real-time");
+				
+				initShowAgainState();
+				
+				if (!this.settingsManager.boolValue('Statistics/UsageStatsNotificationDisplayed', false)) {
+					
+					document.getElementById('submitUsageStatsLabel').innerHTML = tr("Yes, I want to help improve Hyves Desktop by collecting anonymous usage statistics");
+					document.getElementById('submitUsageStatsCheckbox').checked = this.settingsManager.boolValue('Statistics/submitUsageStats', true);
+					document.getElementById("submitUsageStatsControls").style.visibility = 'visible';
+					
+					this.settingsManager.setValue('Statistics/UsageStatsNotificationDisplayed', true, false);
+				}
+			}
+			
+			function saveSubmitUsageStats() {
+				
+				this.settingsManager.setValue('Statistics/submitUsageStats', document.getElementById('submitUsageStatsCheckbox').checked, true);
+			}
+		</script>
+		<style type="text/css">
+			body { margin: 0px; background-color: #fff; }
+			.text { padding: 75px 3px 0px; vertical-align: top; }
+			.pointer { margin: 2px 2px 50px; font-size: 10pt; font-family: "Arial"; }
+			.button { margin-top: 20px; margin-bottom: 35px; border: 0px; }
+		</style>
+	</head>
+	<body onload="init();">
+		<table width="800" height="600" border="0" cellpadding="0" cellspacing="0">
+			<tr style="height: 44px">
+				<td colspan="3">
+					<img src="images/welcome_title.png" width="800" height="44" alt="" />
+				</td>
+			</tr>
+			<tr>
+				<td class="text">
+					<p id="text1" class="pointer">Chatten met je online vrienden incl. alle smileys op Hyves</p>
+					<p id="text2" class="pointer">De laatste foto's, blogs en WWW's van vrienden altijd direct op je computer!</p>
+					<p id="text3" class="pointer">Makkelijk, snel en veel foto's uploaden met de Hyves Photo Uploader</p>
+				</td>
+				<td>
+					<img src="images/desktop1_03.jpg" width="573" height="470" alt="" />
+				</td>
+				<td class="text">
+					<p id="text4" class="pointer">Met 1 klik krabbels, SMS &amp; emails versturen!</p>
+					<a href="intro2.html"><img src="images/next.jpg" class="button" /></a>
+					<p id="text5" class="pointer">Notificaties van je nieuwe krabbels, berichten en reacties in real-time</p>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="3" style="height:50px; vertical-align: text-top">
+					<input id="showAgainCheckbox" type="checkbox" name="showagain" onchange="saveShowAgainState()">
+					<label for="showAgainCheckbox"><span id="showAgainLabel">Deze intro nogmaals tonen</span></label>
+					<a id="submitUsageStatsControls" style="visibility:hidden">
+						<br>
+						<input id="submitUsageStatsCheckbox" type="checkbox" name="submitUsageStats" onchange="saveSubmitUsageStats()">
+						<label for="submitUsageStatsCheckbox">
+							<span id="submitUsageStatsLabel">Ja, ik wil meehelpen Hyves Desktop te verbeteren door anonieme gebruiks statistieken te verzamelen</span>
+						</label>
+					</a>
+				</td>
+			</tr>
+		</table>
+	</body>
+</html>

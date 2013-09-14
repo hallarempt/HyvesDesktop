@@ -1,0 +1,179 @@
+<project>
+    <shortName>hyvesdesktop</shortName>
+    <fullName>Hyves Desktop</fullName>
+    <version>1.3.1</version>
+    <vendor>Hyves</vendor>
+    <installerFilename>Hyves-Desktop-setup-${product_version}.${platform_exec_suffix}</installerFilename>
+    <licenseFile>../terms_of_use.txt</licenseFile>
+    <leftImage>leftsideimage.png</leftImage>
+    <logoImage>logoimage.png</logoImage>
+    <defaultLanguage>nl</defaultLanguage>
+    <allowLanguageSelection>1</allowLanguageSelection>
+    <allowedLanguages>en nl</allowedLanguages>
+    <width>650</width>
+    <preInstallationActionList>
+        <actionGroup>
+            <actionList>
+                 <setInstallerVariable name="installationType" value="upgrade"></setInstallerVariable>
+                 <setInstallerVariable name="next_page" value="readytoinstall"></setInstallerVariable>
+            </actionList>
+            <ruleList>
+                 <fileTest condition="exists" path="${installdir}/bin/HyvesDesktop.sh"></fileTest>
+            </ruleList>
+        </actionGroup>
+    </preInstallationActionList>
+    <compressionAlgorithm>lzma</compressionAlgorithm>
+    <disableSplashScreen>1</disableSplashScreen>
+    <enableRollback>0</enableRollback>
+    <licenseFileEncoding>utf-8</licenseFileEncoding>
+    <requireInstallationByRootUser>0</requireInstallationByRootUser>
+    <saveRelativePaths>1</saveRelativePaths>
+    <componentList>
+        <component>
+            <name>default</name>
+            <description>Default Component</description>
+            <canBeEdited>1</canBeEdited>
+            <selected>1</selected>
+            <show>1</show>
+            <desktopShortcutList>
+                <shortcut>
+                    <comment>Chat with your friends on Hyves</comment>
+                    <exec>"${installdir}/bin/HyvesDesktop.sh" --plugin kwekker</exec>
+                    <icon>${installdir}/bin/HyvesDesktop.png</icon>
+                    <name>${product_fullname} Chat</name>
+                    <path>${installdir}</path>
+                    <platforms>all</platforms>
+                    <runInTerminal>0</runInTerminal>
+                </shortcut>
+                <shortcut>
+                    <comment>Upload your photos directly to Hyves</comment>
+                    <exec>"${installdir}/bin/HyvesDesktop.sh" --plugin photouploader</exec>
+                    <icon>${installdir}/bin/HyvesDesktop.png</icon>
+                    <name>${product_fullname} Photo Uploader</name>
+                    <path>${installdir}</path>
+                    <platforms>all</platforms>
+                    <runInTerminal>0</runInTerminal>
+                </shortcut>
+            </desktopShortcutList>
+            <folderList>
+                <folder>
+                    <description>Program Files</description>
+                    <destination>${installdir}</destination>
+                    <name>programfiles</name>
+                    <platforms>all</platforms>
+                    <distributionFileList>
+                        <distributionDirectory>
+                            <origin>../../build/install/bin</origin>
+                        </distributionDirectory>
+                        <distributionDirectory>
+                            <origin>../../build/install/plugins</origin>
+                        </distributionDirectory>
+                    </distributionFileList>
+                </folder>
+                <folder>
+                    <description>Program Files</description>
+                    <destination>${installdir}</destination>
+                    <name>programfileslinux</name>
+                    <platforms>linux</platforms>
+                </folder>
+            </folderList>
+        </component>
+    </componentList>
+    <customLanguageFileList>
+        <language>
+            <code>en</code>
+            <file>hyvesdesktop_en.lng</file>
+        </language>
+        <language>
+            <code>nl</code>
+            <file>hyvesdesktop_nl.lng</file>
+        </language>
+   </customLanguageFileList>
+   <finalPageActionList>
+        <runProgram>
+            <program>${installdir}/bin/HyvesDesktop.sh</program>
+            <programArguments></programArguments>
+            <progressText>${msg(install.finalPage)}</progressText>
+            <abortOnError>0</abortOnError>
+            <showMessageOnError>0</showMessageOnError>
+            <ruleList>
+                <compareText>
+                    <logic>does_not_equal</logic>
+                    <nocase>1</nocase>
+                    <text>${installtype}</text>
+                    <value>update</value>
+                 </compareText>
+            </ruleList>
+        </runProgram>
+    </finalPageActionList>
+    <postInstallationActionList>
+        <!-- Begin Remove old bundle directory -->
+        <deleteFile>
+            <path>${installdir}/bin/bundle</path>
+            <ruleList>
+                <fileExists path="${installdir}/bin/bundle" />
+            </ruleList>
+        </deleteFile>
+        <!-- End Remove old bundle directory -->
+
+        <!-- Begin Set startup language according to installer language -->
+        <actionGroup>
+            <actionList>
+                <runProgram>
+                    <program>${installdir}/bin/HyvesDesktop.sh</program>
+                    <programArguments>--language ENG --kill</programArguments>
+                    <abortOnError>0</abortOnError>
+                    <ruleList>
+                        <compareText>
+                           <text>${installation_language_code}</text>
+                           <logic>equals</logic>
+                           <value>en</value>
+                        </compareText>
+                    </ruleList>
+                </runProgram>
+                <runProgram>
+                    <program>${installdir}/bin/HyvesDesktop.sh</program>
+                    <programArguments>--language NLD --kill</programArguments>
+                    <abortOnError>0</abortOnError>
+                    <ruleList>
+                        <compareText>
+                            <text>${installation_language_code}</text>
+                            <logic>equals</logic>
+                            <value>nl</value>
+                        </compareText>
+                    </ruleList>
+                </runProgram>
+            </actionList>
+	    <ruleList>
+                <compareText>
+                    <text>${installationType}</text>
+                    <logic>does_not_equal</logic>
+                    <value>upgrade</value>
+                </compareText>
+            </ruleList>
+        </actionGroup>
+        <!-- End Set startup language according to installer language -->
+    </postInstallationActionList>
+    <parameterList>
+        <stringParameter>
+            <name>installtype</name>
+            <cliOptionName>install-type</cliOptionName>
+            <default></default>
+            <value></value>
+            <ask>0</ask>
+        </stringParameter>
+        <directoryParameter>
+            <name>installdir</name>
+            <description>Installer.Parameter.installdir.description</description>
+            <explanation>Installer.Parameter.installdir.explanation</explanation>
+            <value>${platform_install_prefix}/${product_fullname}</value>
+            <default>${platform_install_prefix}/${product_shortname}-${product_version}</default>
+            <allowEmptyValue>0</allowEmptyValue>
+            <ask>yes</ask>
+            <cliOptionName>prefix</cliOptionName>
+            <mustBeWritable>yes</mustBeWritable>
+            <mustExist>0</mustExist>
+            <width>40</width>
+        </directoryParameter>
+    </parameterList>
+</project>

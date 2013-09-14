@@ -1,0 +1,200 @@
+# Top-level CMakeLists.txt file for the HyvesDesktop project. Includes
+# packaging. Note: the package generator uses the INSTALL data to determine
+# what needs to be installed.
+PROJECT(HyvesDesktop)
+
+CMAKE_MINIMUM_REQUIRED(VERSION 2.6.0 FATAL_ERROR)
+CMAKE_POLICY(SET CMP0003 OLD)
+SET(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/modules)
+SET(CMAKE_INCLUDE_DIRECTORIES_PROJECT_BEFORE ON)
+SET(CMAKE_INCLUDE_CURRENT_DIR ON)
+
+# the source tarball doesn't include all the .svn dirs
+FIND_PACKAGE(Subversion)
+IF (EXISTS "${CMAKE_SOURCE_DIR}/.svn")
+        Subversion_WC_INFO(${CMAKE_SOURCE_DIR} HD)
+ELSE (EXISTS "${CMAKE_SOURCE_DIR}/.svn")
+	IF (EXISTS "${CMAKE_SOURCE_DIR}/.git")
+		EXECUTE_PROCESS(COMMAND bash -c "git svn info | grep Revision | cut -b11-"
+		  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+		  OUTPUT_VARIABLE HD_WC_REVISION
+		  OUTPUT_STRIP_TRAILING_WHITESPACE)
+	ENDIF (EXISTS "${CMAKE_SOURCE_DIR}/.git")
+ENDIF (EXISTS "${CMAKE_SOURCE_DIR}/.svn")
+
+SET(HD_MAJOR_VERSION 1)
+SET(HD_MINOR_VERSION 3)
+
+SET(HD_VERSION ${HD_MAJOR_VERSION}.${HD_MINOR_VERSION})
+SET(HD_BUILD_VERSION ${HD_MAJOR_VERSION}.${HD_MINOR_VERSION}.${HD_WC_REVISION})
+SET(HD_WIN_VERSION "${HD_MAJOR_VERSION}, ${HD_MINOR_VERSION}, ${HD_WC_REVISION}, 0")
+
+SET(HD_COPYRIGHT "Copyright (c) 2008-2009 Hyves.")
+
+IF(CMAKE_BUILD_TYPE STREQUAL "Debug")
+	SET(HD_BUILD_TYPE "DEBUG_BUILD")
+ELSE(CMAKE_BUILD_TYPE STREQUAL "Debug")
+	SET(HD_BUILD_TYPE "RELEASE_BUILD")
+ENDIF(CMAKE_BUILD_TYPE STREQUAL "Debug")
+
+CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/src/config.h.in ${CMAKE_CURRENT_SOURCE_DIR}/src/config.h)
+CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/crashreporter/config.h.in ${CMAKE_CURRENT_SOURCE_DIR}/crashreporter/config.h)
+IF(WIN32)
+	CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/HyvesDesktop.rc.in ${CMAKE_CURRENT_SOURCE_DIR}/HyvesDesktop.rc)
+ENDIF(WIN32)
+CONFIGURE_FILE(hyves_macros.h.cmake ${CMAKE_CURRENT_SOURCE_DIR}/hyves_macros.h )
+
+SET(HD_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX})
+SET(HD_LIBDIR lib${LIB_SUFFIX})
+
+# We test using QTestLib, not CTest
+ENABLE_TESTING()
+set(KDE4_BUILD_TESTS true)
+
+# We (ab)use the KDE cmake build system to some extent
+INCLUDE(MacroLibrary)
+INCLUDE(KDE4Macros)
+
+# Qt 4.4 dependency
+SET(QT_MIN_VERSION 4.4.5)
+SET(QT_USE_QTXML TRUE)
+SET(QT_USE_QTNETWORK TRUE)
+SET(QT_USE_QTSCRIPT FALSE)
+SET(QT_USE_QT3SUPPORT FALSE)
+SET(QT_USE_QTTEST TRUE)
+SET(QT_USE_QTWEBKIT TRUE)
+SET(QT_USE_QTSQL FALSE)
+SET(QT_USE_QTSVG TRUE)
+SET(QT_USE_QTUITOOLS TRUE)
+SET(QT_USE_QTDBUS FALSE)
+IF (UNIX AND NOT APPLE)
+	SET(QT_USE_QTDBUS TRUE)
+ENDIF (UNIX AND NOT APPLE)
+
+FIND_PACKAGE(Qt4 REQUIRED)
+INCLUDE(${QT_USE_FILE})
+
+FIND_PACKAGE(QCA2 REQUIRED)
+
+# Zlib dependency
+FIND_PACKAGE(ZLIB REQUIRED)
+
+# QCA
+FIND_PACKAGE(QCA2 REQUIRED)
+IF (FOUND_QCA2)
+  MESSAGE(STATUS "Found qca: " ${QCA_LIBRARIES} " " ${QCA_INCLUDE_DIR})
+ENDIF (FOUND_QCA2)
+
+# Automoc4 dependency for building
+FIND_PACKAGE(Automoc4 REQUIRED)
+
+# OpenSSL (for DLL packaging)
+FIND_PACKAGE(OpenSSL REQUIRED)
+
+# Compiler flags
+IF (NOT WIN32)
+	IF(APPLE)
+		set( CMAKE_CXX_FLAGS "-Wall -arch i386")
+	ELSE(APPLE)
+		set( CMAKE_CXX_FLAGS "-Wall")
+	ENDIF(APPLE)
+ENDIF (NOT WIN32)
+
+SET(HD_BINARY_DIR ${HyvesDesktop_BINARY_DIR})
+SET(HD_LIBDIR ${HyvesDesktop_LIB_DIR})
+
+# Setup output directories
+IF (NOT APPLE)
+	SET(EXECUTABLE_OUTPUT_PATH ${HD_BINARY_DIR})
+	SET(LIBRARY_OUTPUT_PATH ${HD_BINARY_DIR})
+ENDIF (NOT APPLE)
+
+IF(NOT CMAKE_SIZEOF_VOID_P EQUAL 4)
+	# 64 bit (well, anything else than 32 bit, but someone use something else than 32 or 64 bit ?)
+	MESSAGE(STATUS "Building for a 64bit system")
+	set (BUILD_64BIT TRUE)
+	ADD_DEFINITIONS(-DBUILD_64BIT)
+	set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
+ENDIF(NOT CMAKE_SIZEOF_VOID_P EQUAL 4)
+
+# visibility support
+INCLUDE(CheckCXXCompilerFlag)
+CHECK_CXX_COMPILER_FLAG(-fvisibility=hidden __HYVES_HAVE_GCC_VISIBILITY)
+set( __HYVES_HAVE_GCC_VISIBILITY ${__HYVES_HAVE_GCC_VISIBILITY} CACHE BOOL "GCC support for hidden visibility")
+
+# Include directories
+INCLUDE_DIRECTORIES(. src "${CMAKE_SOURCE_DIR}/3rdparty/qtsingleapplication-2.6-opensource/src" "${CMAKE_BINARY_DIR}/src" ${QCA2_INCLUDE_DIR} ${ZLIB_INCLUDE_DIR})
+
+
+ADD_SUBDIRECTORY(3rdparty)
+
+ADD_SUBDIRECTORY(src)
+ADD_SUBDIRECTORY(plugins/kwekker)
+
+IF (EXISTS "${CMAKE_SOURCE_DIR}/plugins/photouploader")
+	ADD_SUBDIRECTORY(plugins/photouploader)
+ENDIF (EXISTS "${CMAKE_SOURCE_DIR}/plugins/photouploader")
+
+#
+# Executable target HyvesDesktop
+#
+SET(HD_SRCS
+	src/main.cpp
+)
+
+SET(HD_QM_FILES
+	HyvesDesktop_nl.qm
+)
+
+IF (WIN32)
+	SET(HD_SRCS ${HD_SRCS} HyvesDesktop.rc)
+ENDIF (WIN32)
+
+SET(HD_RCCS HyvesDesktop.qrc)
+QT4_ADD_RESOURCES(HD_RCC_SRCS ${HD_RCCS})
+
+KDE4_ADD_EXECUTABLE(HyvesDesktop ${HD_SRCS} ${HD_RCC_SRCS} )
+TARGET_LINK_LIBRARIES(HyvesDesktop HyvesDesktopLib ${QT_LIBRARIES})
+INSTALL(TARGETS HyvesDesktop DESTINATION bin)
+
+IF (APPLE)	
+	ADD_CUSTOM_COMMAND(TARGET HyvesDesktop
+		POST_BUILD 
+		COMMAND "${QT_BINARY_DIR}/macdeployqt" "HyvesDesktop.app"
+		COMMAND ${CMAKE_COMMAND} -E copy_if_different "${CMAKE_SOURCE_DIR}/*.qm" "HyvesDesktop.app/Contents/Macos/"
+		WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+	)
+	ADD_CUSTOM_COMMAND(TARGET HyvesDesktop
+		POST_BUILD 
+		COMMAND rm -f bundle.zip
+		COMMAND zip -r bundle.zip * -x *.svn*
+		COMMAND ${CMAKE_COMMAND} -E copy_if_different bundle.zip "${CMAKE_CURRENT_BINARY_DIR}/HyvesDesktop.app/Contents/Macos/"
+		WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/data/bundle
+	)
+ELSE (APPLE)
+	INSTALL(FILES ${HD_QM_FILES} DESTINATION bin)
+	
+	# This helps a lot with in-place running (given that Qt is already in the path
+	IF (WIN32)
+		ADD_CUSTOM_COMMAND(TARGET HyvesDesktop
+			POST_BUILD
+			COMMAND ${CMAKE_COMMAND} -E copy_if_different "${QCA2_INCLUDE_DIR}/../../bin/qca.dll" ${CMAKE_BINARY_DIR}
+			COMMAND ${CMAKE_COMMAND} -E copy_if_different "${ZLIB_INCLUDE_DIR}/../zlib1.dll" ${CMAKE_BINARY_DIR}
+		)
+	ENDIF (WIN32)
+	
+	ADD_CUSTOM_COMMAND(TARGET HyvesDesktop
+		POST_BUILD 
+		COMMAND rm -f bundle.zip
+		COMMAND zip -r bundle.zip * -x *.svn*
+		WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/data/bundle
+	)
+	INSTALL(FILES "${CMAKE_SOURCE_DIR}/data/bundle/bundle.zip" DESTINATION bin)
+ENDIF (APPLE)
+
+# our packaging depends on being in a subversion checkout
+ADD_SUBDIRECTORY(distribution)
+
+if (NOT BUILD_64BIT)
+    ADD_SUBDIRECTORY(crashreporter)
+endif (NOT BUILD_64BIT)

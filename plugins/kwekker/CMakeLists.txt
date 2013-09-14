@@ -1,0 +1,3 @@
+PROJECT(Kwekker)
+
+ADD_SUBDIRECTORY(src)

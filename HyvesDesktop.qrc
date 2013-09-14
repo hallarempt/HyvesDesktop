@@ -1,0 +1,42 @@
+<RCC>
+    <qresource prefix="/" >
+        <file>src/tester/Tester.js</file>
+        <file>src/tests/BuzzTest.js</file>
+        <file>src/tests/HistoryTest.js</file>
+        <file>src/tests/InitializationTest.js</file>
+        <file>src/tests/LoginTest.js</file>
+        <file>src/tests/LogoutTest.js</file>
+        <file>src/tests/MUCSessionTest.js</file>
+        <file>src/tests/NewSessionTest.js</file>
+        <file>src/tests/PingTest.js</file>
+        <file>src/tests/ReceiptConfirmationTest.js</file>
+        <file>src/tests/RosterTest.js</file>
+        <file>src/tests/SearchBarTest.js</file>
+        <file>src/tests/UnifiedMessagingTest.js</file>
+        <file>src/tests/WwwDialogTest.js</file>
+        <file>data/loading.svg</file>
+        <file>data/appicon_16.png</file>
+        <file>data/appicon_16_inactive.png</file>
+        <file>data/appicon_16_mac_inactive.png</file>
+        <file>data/appicon_16_notify.png</file>
+        <file>data/appicon_16_r.png</file>
+        <file>data/appicon_22_active.png</file>
+        <file>data/appicon_22_inactive.png</file>
+        <file>data/appicon_22_notify.png</file>
+        <file>data/appicon_22_r.png</file>
+        <file>data/appicon_24.png</file>
+        <file>data/appicon_24_r.png</file>
+        <file>data/appicon_32.png</file>
+        <file>data/appicon_32_r.png</file>
+        <file>data/appicon_64.png</file>
+        <file>data/appicon_64_r.png</file>
+        <file>data/appicon_128.png</file>
+        <file>data/appicon_128_r.png</file>
+        <file>data/about_bg.png</file>
+        <file>data/avatar-bg-75.png</file>
+        <file>data/bell.png</file>
+        <file>data/bundle/images/ajax_action.gif</file>
+        <file>data/photo.png</file>
+        <file>data/splitterhandle.png</file>
+    </qresource>
+</RCC>

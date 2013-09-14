@@ -1,0 +1,102 @@
+Index: 3rdparty/quazip/quazip.cpp
+===================================================================
+--- 3rdparty/quazip/quazip.cpp	(revision 4816)
++++ 3rdparty/quazip/quazip.cpp	(working copy)
+@@ -270,3 +270,40 @@
+     return QString();
+   return fileNameCodec->toUnicode(fileName.constData());
+ }
++
++bool QuaZip::buildLookupIndex()
++{
++  zipError=UNZ_OK;
++  if(mode!=mdUnzip) {
++    qWarning("QuaZip::buildLookupIndex(): ZIP is not open in mdUnzip mode");
++    return false;
++  }
++  if(unzFile_f==NULL) {
++    zipError=UNZ_PARAMERROR;
++    return false;
++  }
++  index.clear();
++  for(bool more=goToFirstFile(); more; more=goToNextFile()) {
++    QString current=getCurrentFileName();
++    if(current.isNull()) return false;
++    unz_file_pos pos;
++    unzGetFilePos(unzFile_f, &pos);
++    index[current]=pos;
++  }
++  return true;
++}
++
++bool QuaZip::setIndexedCurrentFile(const QString& fileName)
++{
++  zipError=UNZ_OK;
++  if (!index.contains(fileName)) return false;
++  unz_file_pos pos=index[fileName];
++  zipError=unzGoToFilePos(unzFile_f, &pos);
++  hasCurrentFile_f=zipError==UNZ_OK;
++  return hasCurrentFile_f;
++}
++
++bool QuaZip::indexContains(const QString& fileName) const
++{
++  return index.contains(fileName);
++}
+Index: 3rdparty/quazip/quazip.h
+===================================================================
+--- 3rdparty/quazip/quazip.h	(revision 4816)
++++ 3rdparty/quazip/quazip.h	(working copy)
+@@ -20,6 +20,7 @@
+  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+  **/
+ 
++#include <QMap>
+ #include <QString>
+ #include <QTextCodec>
+ 
+@@ -117,6 +118,7 @@
+     };
+     bool hasCurrentFile_f;
+     int zipError;
++    QMap<QString, unz_file_pos> index;
+     // not (and will not be) implemented
+     QuaZip(const QuaZip& that);
+     // not (and will not be) implemented
+@@ -328,6 +330,36 @@
+      * getUnzFile() function also apply to this function.
+      **/
+     zipFile getZipFile() {return zipFile_f;}
++    /// Builds an index for fast random-access of files.
++    /** Call this method before any calls to setIndexedCurrentFile().
++     * Returns \c true if successful, \c false otherwise.
++     *
++     * Calling this method will reset the current file position.
++     *
++     * Should be used only in QuaZip::mdUnzip mode.
++     *
++     * \sa setIndexedCurrentFile()
++     */
++    bool buildLookupIndex();
++    /// Sets the current file based on a previously build lookup index.
++    /** Use this method as a fast alternative to setCurrentFile().
++     *
++     * Returns \c true if successful, \c false otherwise. \a fileName is always
++     * case-sensitive. Call getZipError() in the case of a failure to get error
++     * code.
++     *
++     * Should be used only in QuaZip::mdUnzip mode.
++     *
++     * \sa buildLookupIndex()
++     */
++    bool setIndexedCurrentFile(const QString& fileName);
++    /// Returns whether the lookup index contains a file.
++    /** Returns \c true if the file is in the index, \c false otherwise.
++     * \a fileName is always case-sensitive.
++     *
++     * \sa buildLookupIndex()
++     */
++    bool indexContains(const QString& fileName) const;
+ };
+ 
+ #endif

@@ -1,0 +1,22 @@
+FOREACH(LIB QtDBus QtCore QtXml QtTest QtWebKit QtGui QtNetwork QtSvg)
+	INSTALL(FILES "${QT_LIBRARY_DIR}/lib${LIB}.so.${QT_VERSION_MAJOR}.${QT_VERSION_MINOR}.${QT_VERSION_PATCH}"
+		RENAME "lib${LIB}.so.${QT_VERSION_MAJOR}"
+		DESTINATION bin
+	)
+ENDFOREACH(LIB)
+
+INSTALL(PROGRAMS "${QT_LIBRARY_DIR}/libqca.so.2.0.1" RENAME "libqca.so.2" DESTINATION bin)
+INSTALL(PROGRAMS "/usr/lib/libcrypto.so.0.9.8" DESTINATION bin)
+INSTALL(PROGRAMS "/usr/lib/libssl.so.0.9.8" DESTINATION bin)
+INSTALL(PROGRAMS "/usr/lib/libXrandr.so.2.1.0" RENAME "libXrandr.so.2" DESTINATION bin)
+
+FOREACH(PLUGINDIR crypto accessible imageformats codecs iconengines)
+	INSTALL(DIRECTORY "${QT_LIBRARY_DIR}/../plugins/${PLUGINDIR}"
+		DESTINATION plugins
+		PATTERN "*.debug" EXCLUDE
+	)
+ENDFOREACH(PLUGINDIR)
+
+INSTALL(PROGRAMS HyvesDesktop.sh DESTINATION bin)
+
+INSTALL(FILES HyvesDesktop.png DESTINATION bin)

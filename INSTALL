@@ -1,0 +1,119 @@
+Installation instructions
+
+This source release of the Hyves Desktop includes the Chat module,
+but not the Photo Uploader module, for legal reasons. 
+
+Build Prerequisites
+
+ * Qt 4.4.3 or later
+ * Automoc
+ * CMake 2.6.2
+ * A suitable compiler
+ 
+For Windows:
+
+ * OpenSSL for Windows
+ * Zlib
+ * Visual Studio Express 2008
+
+Included Third-Party Libaries
+
+The HyvesDesktop source release includes the source for the following
+third party libraries:
+
+ * curl
+   ---
+   A library to pull and push data over http or ftp. The development 
+   packages of curl are needed on OSX and Linux for Google Breakpad to
+   compile
+
+ * idle
+   ---
+   A small cross-platform library that detect whether the user has been idle.
+   Origin: the Psi XMPP client (http://psi-im.org/)
+
+ * libexif
+   ---
+   A library to read exif tags.
+
+ * qca
+   ---
+   The Qt Cryptographic Architecture (http://delta.affinix.com/qca/). You need
+   to compile and install this to your Qt installation first. It is not part of
+   the general build process.
+
+ * quazip
+   ---
+   A small library to handle zip files (http://quazip.sourceforge.net/)
+
+ * GenusApisQt
+   ---
+   C++ API wrapper for the Hyves Website API. (http://hyves-api.hyves.nl/)
+
+ * iris
+   ---
+   An XMPP implementation. (http://delta.affinix.com/iris/) 
+
+ * macdeploy
+   ---
+   A hack around the Qt 4.5 macdeploy tool to make deploying application with
+   plugins and libraries easier. Also works for Qt 4.4.
+
+ * qjson
+   ---
+   A Qt-based library that maps JSON data to QVariant objects.
+   (http://qjson.sourceforge.net/)
+
+Build Instructions
+
+ Hyves Desktop uses CMake (http://cmake.org). We also use large chunks of the
+ KDE extensions to CMake, but those are packaged.
+
+ * You need to have Automoc installed. Automoc is available from kdesupport 
+   (http://websvn.kde.org/trunk/kdesupport/automoc/).
+ * You first need to build and install QCA to your Qt directory.
+
+Windows
+
+For these instructions, we assume you have installed ZLib to C:\ZLib, OpenSSL to
+C:\OpenSSL and Qt to C:\Qt\4.4.3.
+
+ cd HyvesDesktop-src-1.0
+ mkdir build
+ cd build
+ xcopy ..\data\bundle . /E
+ cmake .. -G "NMake Makefiles" -DZLIB_INCLUDE_DIR=C:\ZLib\include \
+  -DZLIB_LIBRARY=C:\ZLib\lib\zdll.lib -DCMAKE_PREFIX_PATH=C:\OpenSSL;C:\Qt\4.4.3
+ nmake
+ HyvesDesktop.exe
+
+Linux
+
+For these instructions, we assume the environment variable $QTDIR is set to the
+directory where Qt is installed.
+
+ cd HyvesDesktop-src-1.0
+ mkdir build
+ cd build
+ ln -s ../data/bundle .
+ PKG_CONFIG_PATH=$QTDIR/lib/pkgconfig/:$PKG_CONFIG_PATH PATH=$QTDIR/bin:$PATH \
+  cmake ..
+ make
+ ./HyvesDesktop.shell
+
+Mac OS X
+
+For these instructions, we assume the environment variable $QTDIR is set to the
+directory where Qt is installed.
+
+ cd HyvesDesktop-src-1.0
+ mkdir build
+ cd build
+ PKG_CONFIG_PATH=$QTDIR/lib/pkgconfig/:$PKG_CONFIG_PATH PATH=$QTDIR/bin:$PATH \
+  cmake ..
+ make
+ open HyvesDesktop.app
+
+Have fun! For questions: http://hyvesdesktop.hyves.nl/!
+
+- The Hyves Desktop Team.
